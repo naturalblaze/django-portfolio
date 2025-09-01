@@ -1,0 +1,126 @@
+[build-system]
+requires = [
+    "setuptools>=67.6.0",
+    "wheel>=0.40.0"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-portfolio"
+dynamic = ["readme"]
+version = "0.1.0"
+requires-python = ">=3.10"
+description = "Django Portfolio for Blaze Bryant"
+keywords = [
+]
+authors = [
+  { name="Blaze Bryant", email="naturalblaze@gmail.com" },
+]
+maintainers = [
+  {name = "Blaze Bryant", email = "naturalblaze@gmail.com"},
+]
+license = "MIT"
+license-files = [
+    "LICENSE"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX",
+    "Operating System :: POSIX :: BSD",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",]
+
+
+dependencies = [
+    "django",
+    "django-markdownx",
+    "django-environ",
+]
+
+[dependency-groups]
+dev = [
+    "black",
+    "tomli",
+    "pytest-cov",
+    "pytest-django",
+    "sphinx",
+    "pylint",
+    "myst-parser",
+    "sphinx_rtd_theme",
+    "sphinxcontrib-mermaid",
+    "httpx",
+    "bandit",
+    "ruff",
+]
+[project.urls]
+Documentation = "https://django-portfolio.readthedocs.io/en/latest/"
+Source = "https://github.com/naturalblaze/django-portfolio"
+Tracker = "https://github.com/naturalblaze/django-portfolio/issues"
+
+# Add your project folder and app folders
+[tool.setuptools.packages.find]
+include = [
+    "portfolio_project*",
+    # "<app-name>*",
+]
+
+# Add or remove file extensions to include the data
+[tool.setuptools.package-data]
+"*" = ["*.txt", "*.rst"]
+
+[tool.setuptools]
+zip-safe = false
+
+[tool.setuptools.dynamic]
+readme = {file = "README.md", content-type = "text/markdown"}
+
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"
+markers = [
+    "place_holder: marks tests as place_holder (deselect with -m 'not place_holder')",
+]
+
+[tool.coverage.run]
+command_line= "-m pytest -vvv"
+
+# Add your project folder and app folders
+[tool.coverage.report]
+include = [
+    "portfolio_project*",
+    # "<app-name>*",
+]
+fail_under = 70
+
+[tool.pylint]
+max-line-length = 120
+# This allows pylint to complain on FIXME and XXX notes
+notes = [
+    "FIXME",
+    "XXX",
+]
+fail-under = 9.9
+
+[tool.black]
+line-length = 120
+
+[tool.bandit]
+exclude_dirs = [
+    "tests",
+    "venv",
+    "docs",
+]
+# UV settings reference https://docs.astral.sh/uv/reference/settings/
+[tool.uv]
+keyring-provider = "subprocess"
+native-tls = true
+
