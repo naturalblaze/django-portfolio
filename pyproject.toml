@@ -44,6 +44,10 @@ dependencies = [
     "django",
     "django-markdownx",
     "django-environ",
+    "django-htmx>=1.23.2",
+    "django-taggit>=6.1.0",
+    "markdown>=3.8.2",
+    "django-extensions>=4.1",
 ]
 
 [dependency-groups]
@@ -60,6 +64,8 @@ dev = [
     "httpx",
     "bandit",
     "ruff",
+    "factory-boy>=3.3.3",
+    "pytest-factoryboy>=2.8.1",
 ]
 [project.urls]
 Documentation = "https://django-portfolio.readthedocs.io/en/latest/"
@@ -70,7 +76,7 @@ Tracker = "https://github.com/naturalblaze/django-portfolio/issues"
 [tool.setuptools.packages.find]
 include = [
     "portfolio_project*",
-    # "<app-name>*",
+    "portfolio_blog*"
 ]
 
 # Add or remove file extensions to include the data
@@ -85,7 +91,8 @@ readme = {file = "README.md", content-type = "text/markdown"}
 
 
 [tool.pytest.ini_options]
-addopts = "--strict-markers"
+DJANGO_SETTINGS_MODULE = "portfolio_project.settings.local"
+addopts = "--strict-markers --cov-report term-missing"
 markers = [
     "place_holder: marks tests as place_holder (deselect with -m 'not place_holder')",
 ]
@@ -96,13 +103,16 @@ command_line= "-m pytest -vvv"
 # Add your project folder and app folders
 [tool.coverage.report]
 include = [
-    "portfolio_project*",
-    # "<app-name>*",
+    "portfolio_project/*",
+    "portfolio_blog/*",
 ]
 fail_under = 70
 
 [tool.pylint]
 max-line-length = 120
+ignore-paths = [
+    ".*migrations.*$",
+]
 # This allows pylint to complain on FIXME and XXX notes
 notes = [
     "FIXME",
@@ -113,14 +123,26 @@ fail-under = 9.9
 [tool.black]
 line-length = 120
 
+[tool.ruff]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+
 [tool.bandit]
 exclude_dirs = [
     "tests",
     "venv",
+    ".venv",
     "docs",
+    "scripts",
 ]
+
 # UV settings reference https://docs.astral.sh/uv/reference/settings/
 [tool.uv]
 keyring-provider = "subprocess"
 native-tls = true
-
