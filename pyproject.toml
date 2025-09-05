@@ -66,6 +66,7 @@ dev = [
     "ruff",
     "factory-boy>=3.3.3",
     "pytest-factoryboy>=2.8.1",
+    "pytest-dotenv>=0.5.2",
 ]
 [project.urls]
 Documentation = "https://django-portfolio.readthedocs.io/en/latest/"
@@ -91,8 +92,10 @@ readme = {file = "README.md", content-type = "text/markdown"}
 
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "portfolio_project.settings.local"
-addopts = "--strict-markers --cov-report term-missing"
+env_files = [
+    "tests/data/.test-env"
+]
+addopts = "--ds=portfolio_project.settings.local --reuse-db --import-mode=importlib --strict-markers --cov-report term-missing"
 markers = [
     "place_holder: marks tests as place_holder (deselect with -m 'not place_holder')",
 ]
