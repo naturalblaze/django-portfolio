@@ -7,12 +7,13 @@ from taggit.models import Tag
 register = template.Library()
 
 
-@register.inclusion_tag("portfolio_blog/tag-cloud.html")
-def sidebar_tag_cloud() -> Dict[str, Any]:
+@register.inclusion_tag("portfolio_blog/tag-cloud.html", takes_context=True)
+def sidebar_tag_cloud(context) -> Dict[str, Any]:
     """Returns a dictionary of tags with their respective post counts.
 
     Returns:
         Dict[str, Any]: A dictionary containing the tags.
     """
+    request = context["request"]
     tags = Tag.objects.all()
-    return {"tags": tags}
+    return {"tags": tags, "request": request}

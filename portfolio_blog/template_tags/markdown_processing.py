@@ -22,6 +22,6 @@ def markdown(value: str) -> str:
         return ""
 
     # Use the markdown library to convert the value
-    html = md.markdown(value, extensions=["fenced_code", "codehilite"])
+    html = md.markdown(value, extensions=["fenced_code", "codehilite", "pymdownx.emoji"])
 
     return html

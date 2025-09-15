@@ -380,6 +380,7 @@ dependencies = [
     { name = "django-markdownx" },
     { name = "django-taggit" },
     { name = "markdown" },
+    { name = "pymdown-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -411,6 +412,7 @@ requires-dist = [
     { name = "django-markdownx" },
     { name = "django-taggit", specifier = ">=6.1.0" },
     { name = "markdown", specifier = ">=3.8.2" },
+    { name = "pymdown-extensions", specifier = ">=10.16.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -883,6 +885,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/9d/58/1f614a84d3295c542e9f6e2c764533eea3f318f4592dc1ea06c797114767/pylint-3.3.8.tar.gz", hash = "sha256:26698de19941363037e2937d3db9ed94fb3303fdadf7d98847875345a8bb6b05", size = 1523947, upload-time = "2025-08-09T09:12:57.234Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2d/1a/711e93a7ab6c392e349428ea56e794a3902bb4e0284c1997cff2d7efdbc1/pylint-3.3.8-py3-none-any.whl", hash = "sha256:7ef94aa692a600e82fabdd17102b73fc226758218c97473c7ad67bd4cb905d83", size = 523153, upload-time = "2025-08-09T09:12:54.836Z" },
+]
+
+[[package]]
+name = "pymdown-extensions"
+version = "10.16.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markdown" },
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/55/b3/6d2b3f149bc5413b0a29761c2c5832d8ce904a1d7f621e86616d96f505cc/pymdown_extensions-10.16.1.tar.gz", hash = "sha256:aace82bcccba3efc03e25d584e6a22d27a8e17caa3f4dd9f207e49b787aa9a91", size = 853277, upload-time = "2025-07-28T16:19:34.167Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e4/06/43084e6cbd4b3bc0e80f6be743b2e79fbc6eed8de9ad8c629939fa55d972/pymdown_extensions-10.16.1-py3-none-any.whl", hash = "sha256:d6ba157a6c03146a7fb122b2b9a121300056384eafeec9c9f9e584adfdb2a32d", size = 266178, upload-time = "2025-07-28T16:19:31.401Z" },
 ]
 
 [[package]]

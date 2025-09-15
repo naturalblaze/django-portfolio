@@ -1,14 +1,20 @@
 <div class="mb-4">
     <div class="border-bottom">
         <div class="pb-4">
-            <h4 class="pb-2 fw-bold fs-14 text-uppercase">Discover more of what matters to you</h4>
+            <h4 class="pb-2 fw-bold fs-14 text-uppercase">Filter by Blog Post Tags</h4>
+            <form method="get">
             {% for tag in tags %}
-            <span class="border border-dark p-1 px-3 mb-2 me-1 rounded-pill" style="display:inline-block">
-                <a class="text-decoration-none text-dark fs-15 fw-500">
-                    {{tag.name}}
-                </a>
-            </span>
+                {% if request.GET.filter_field == tag.name %}
+                    <button type="submit" class="btn btn-success mx-auto mb-2" name="filter_field" value="{{ tag.name }}">
+                        {{tag.name}}
+                    </button>
+                {% else %}
+                    <button type="submit" class="btn btn-outline-success mx-auto mb-2" name="filter_field" value="{{ tag.name }}">
+                        {{tag.name}}
+                    </button>
+                {% endif %}
             {% endfor %}
+            </form>
         </div>
     </div>
 </div>

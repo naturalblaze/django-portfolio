@@ -8,6 +8,65 @@ from django.contrib.auth.models import User
 from portfolio_blog.models import Post
 
 FAKE = faker.Faker()
+SKILLS = [
+    "Jenkins",
+    "GitHub",
+    "Github Actions",
+    "ArgoCD",
+    "Linux",
+    "Ubuntu",
+    "RedHat",
+    "Debian",
+    "Fedora",
+    "CentOS",
+    "Suse",
+    "VMWare",
+    "KVM",
+    "QEMU",
+    "LibVirt",
+    "VirtualBox",
+    "Docker",
+    "Kubernetes",
+    "Podman",
+    "Bash",
+    "Python",
+    "Django",
+    "Flask",
+    "FastAPI",
+    "JavaScript",
+    "HTML5",
+    "CSS3",
+    "Bootstrap",
+    "F5 LTM/GTM",
+    "VMWare AVI",
+    "PostgreSQL",
+    "MySQL",
+    "SQLite",
+    "MongoDB",
+    "Redis",
+    "Kafka",
+    "IBM MQ",
+    "MQTT",
+    "Apache HTTPX",
+    "Nginx",
+    "Grafana",
+    "Prometheus",
+    "Splunk",
+    "Cacti",
+    "Nagios",
+    "Ansible",
+    "Terraform",
+    "Puppet",
+    "Confluence",
+    "Jira",
+    "SharePoint",
+    "PowerBI",
+    "Agile",
+    "Scrum",
+    "Kanban",
+    "Azure",
+    "GCP",
+]
 
 
 class PostFactory(factory.django.DjangoModelFactory):
@@ -47,5 +106,5 @@ class PostFactory(factory.django.DjangoModelFactory):
             for tag in extracted:
                 self.tags.add(tag)
         else:
-            for tag in random.sample(["django", "python", "blog", "factory", "test"], random.randint(1, 3)):
+            for tag in random.sample(SKILLS, random.randint(1, 3)):
                 self.tags.add(tag)

@@ -77,7 +77,7 @@ gh-pages:
 	@uv run sphinx-build ./docs ./docs/gh-pages
 
 build-container:
-	@cd containers && podman build --ssh=default --build-arg=build_branch=main -t django-portfolio:latest -f Containerfile
+	@cd containers && podman build --ssh=default --build-arg=build_branch=develop -t django-portfolio:latest -f Containerfile
 
 start-container:
 	@podman run -itd --name django-portfolio -p 8080:8080 localhost/django-portfolio:latest

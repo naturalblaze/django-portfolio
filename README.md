@@ -4,6 +4,11 @@
 
 * Django Portfolio for Blaze Bryant
 
+| Branch | Tests |
+| ------ | ----- |
+| develop | [![Unit-Testing, Coverage, Linting](https://github.com/naturalblaze/django-portfolio/actions/workflows/test-coverage-lint-uv.yml/badge.svg?branch=develop)](https://github.com/naturalblaze/django-portfolio/actions/workflows/test-coverage-lint-uv.yml) |
+| main | [![Unit-Testing, Coverage, Linting](https://github.com/naturalblaze/django-portfolio/actions/workflows/test-coverage-lint-uv.yml/badge.svg)](https://github.com/naturalblaze/django-portfolio/actions/workflows/test-coverage-lint-uv.yml) |
+
 ## Setup Project and test server with `UV`
 
 * Create Python Virtual Environment
