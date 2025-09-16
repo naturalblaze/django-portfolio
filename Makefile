@@ -50,6 +50,9 @@ pylint:
 pytest:
 	@uv run pytest --cov -vvv
 
+django-test:
+	@uv run python manage.py test $(APP)
+
 ruff-format:
 	@uv run ruff format $(PROJECT)/
 	@uv run ruff format $(APP)/

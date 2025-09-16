@@ -33,6 +33,7 @@ class PostFactory(factory.django.DjangoModelFactory):
     slug = "x"
     author = factory.SubFactory(UserFactory)
     content = "x"
+    post_img = "x"
     status = "published"
 
     @factory.post_generation
