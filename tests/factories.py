@@ -4,7 +4,6 @@ import factory
 from django.contrib.auth.models import User
 from portfolio_blog.models import (
     Post,
-    Project,
     PortfolioSkills,
     PortfolioJobs,
     PortfolioEducation,
@@ -59,20 +58,6 @@ class PostFactory(factory.django.DjangoModelFactory):
 
         else:
             self.tags.add("default-tag")
-
-
-class ProjectFactory(factory.django.DjangoModelFactory):
-    """Project factory for tests."""
-
-    class Meta:
-        """Meta class for ProjectFactory."""
-
-        model = Project
-        skip_postgeneration_save = True
-
-    title = "x"
-    description = "x"
-    url = "http://example.com"
 
 
 class PortfolioSkillsFactory(factory.django.DjangoModelFactory):

@@ -2,7 +2,7 @@
 
 from typing import List
 from django.contrib import admin
-from .models import Post, Project, PortfolioSkills, PortfolioEducation, PortfolioJobs, PortfolioCertifications
+from .models import Post, PortfolioSkills, PortfolioEducation, PortfolioJobs, PortfolioCertifications
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -88,7 +88,6 @@ class PortfolioCertificationsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post, PostAdmin)
-admin.site.register(Project)
 admin.site.register(PortfolioSkills, PortfolioSkillsAdmin)
 admin.site.register(PortfolioEducation, PortfolioEducationAdmin)
 admin.site.register(PortfolioJobs, PortfolioJobsAdmin)

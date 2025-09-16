@@ -28,16 +28,6 @@ class TestPostModel:
         assert post.get_absolute_url() == "/posts/test-post/"
 
 
-class TestProjectModel:
-    """Test suite for the Project model."""
-
-    def test_str_method(self, project_factory):
-        """Test the __str__ method of the Project model."""
-        project = project_factory(title="Test Project")
-
-        assert project.__str__() == "Test Project"
-
-
 class TestPortfolioSkillsModel:
     """Test suite for the PortfolioSkills model."""
 

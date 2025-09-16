@@ -1,6 +1,6 @@
 """Views for portfolio_blog app"""
 
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView
 from django.db.models import Q
 from .models import Post, PortfolioJobs, PortfolioSkills, PortfolioEducation, PortfolioCertifications
 
@@ -89,9 +89,3 @@ class PostView(DetailView):
         )[:5]
 
         return context
-
-
-class ProjectView(TemplateView):
-    """View to display projects page."""
-
-    template_name = "portfolio_blog/projects.html"

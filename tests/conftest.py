@@ -3,7 +3,6 @@
 from pytest_factoryboy import register
 from .factories import (
     PostFactory,
-    ProjectFactory,
     PortfolioSkillsFactory,
     PortfolioJobsFactory,
     PortfolioEducationFactory,
@@ -11,7 +10,6 @@ from .factories import (
 )
 
 register(PostFactory)
-register(ProjectFactory)
 register(PortfolioSkillsFactory)
 register(PortfolioJobsFactory)
 register(PortfolioEducationFactory)

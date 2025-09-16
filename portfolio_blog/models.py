@@ -45,31 +45,6 @@ class Post(models.Model):
         return str(self.title)
 
 
-class Project(models.Model):
-    """Model representing a project."""
-
-    title = models.CharField(max_length=250)
-    description = models.TextField()
-    url = models.URLField(max_length=200)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
-
-    class Meta:  # pylint: disable=too-few-public-methods
-        """Meta options for the Project model."""
-
-        ordering = ["-created_at"]
-        verbose_name = "Project"
-        verbose_name_plural = "Projects"
-
-    def __str__(self) -> str:
-        """String representation of the Project model.
-
-        Returns:
-            str: The title of the project.
-        """
-        return str(self.title)
-
-
 class PortfolioSkills(models.Model):
     """Model representing a portfolio skill."""
 
@@ -81,7 +56,7 @@ class PortfolioSkills(models.Model):
 
     def clean(self):
         """Ensure proficiency is between 1 and 10."""
-        if not (1 <= self.proficiency <= 10):
+        if not 1 <= self.proficiency <= 10:
             raise ValueError("Proficiency must be between 1 and 10")
 
     class Meta:  # pylint: disable=too-few-public-methods
