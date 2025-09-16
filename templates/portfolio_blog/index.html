@@ -1,0 +1,18 @@
+{% extends "../base/base.html" %}
+{% block title %}Index{%endblock%}
+
+{% block template %}
+{% include "../base/navbar.html" %}
+{% include "./splash.html" %}
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            {% include "./post-list-elements.html" %}
+        </div>
+        <div class="d-none d-lg-block col-4">
+            {% sidebar_tag_cloud %}
+            {% include "../base/footer.html" %}
+        </div>
+    </div>
+</div>
+{% endblock %}

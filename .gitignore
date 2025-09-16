@@ -136,3 +136,10 @@ dmypy.json
 
 # No temp_*.py files
 temp_*.py
+
+# Django
+
+
+# Ruff
+.ruff_cache
+

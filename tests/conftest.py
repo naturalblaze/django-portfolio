@@ -1,5 +1,16 @@
-import os, sys
-import pytest
+"""Configuration file for pytest to set up the testing environment."""
 
-base_path = os.path.join(os.path.abspath(os.path.dirname(__name__)))
-sys.path.append(os.path.join(base_path))
+from pytest_factoryboy import register
+from .factories import (
+    PostFactory,
+    PortfolioSkillsFactory,
+    PortfolioJobsFactory,
+    PortfolioEducationFactory,
+    PortfolioCertificationsFactory,
+)
+
+register(PostFactory)
+register(PortfolioSkillsFactory)
+register(PortfolioJobsFactory)
+register(PortfolioEducationFactory)
+register(PortfolioCertificationsFactory)
