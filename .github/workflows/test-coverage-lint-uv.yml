@@ -41,6 +41,10 @@ jobs:
     - name: Install UV
       run: |
         pip install uv
+    - name: Run Migrations
+      run: |
+        python manage.py makemigrations
+        python manage.py migrate
     - name: Run Linting
       run: |
         make pylint
@@ -71,6 +75,10 @@ jobs:
       - name: Install UV
         run: |
           pip install uv
+      - name: Run Migrations
+        run: |
+          python manage.py makemigrations
+          python manage.py migrate
       - name: Run Unit-Testing and Coverage
         run: |
           make coverage
@@ -101,6 +109,10 @@ jobs:
       - name: Install UV
         run: |
           pip install uv
+      - name: Run Migrations
+        run: |
+          python manage.py makemigrations
+          python manage.py migrate
       - name: Run Build
         run: |
           make build
