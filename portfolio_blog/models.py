@@ -79,6 +79,11 @@ class PortfolioSkills(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     tags = TaggableManager()
 
+    def clean(self):
+        """Ensure proficiency is between 1 and 10."""
+        if not (1 <= self.proficiency <= 10):
+            raise ValueError("Proficiency must be between 1 and 10")
+
     class Meta:  # pylint: disable=too-few-public-methods
         """Meta options for the PortfolioSkills model."""
 
