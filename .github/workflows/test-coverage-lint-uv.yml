@@ -24,8 +24,6 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - "3.9"
-          - "3.10"
           - "3.11"
           - "3.12"
           - "3.13"
@@ -52,8 +50,6 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - "3.9"
-          - "3.10"
           - "3.11"
           - "3.12"
           - "3.13"
@@ -75,15 +71,41 @@ jobs:
         run: |
           make coverage
 
-  build:
+  testing-security:
     needs: testing-coverage
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         python-version:
-          - "3.9"
-          - "3.10"
+          - "3.11"
+          - "3.12"
+          - "3.13"
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install UV
+        run: |
+          pip install uv
+      - name: Run Security scanning
+        run: |
+          make check-security
+
+  build:
+    needs: testing-security
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
           - "3.11"
           - "3.12"
           - "3.13"

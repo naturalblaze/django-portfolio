@@ -1,0 +1,95 @@
+{% extends "../base/3-col-template.html" %}
+{% load static %}
+{% block title %}Resume{%endblock%}
+
+{% include "../base/navbar.html" %}
+
+{% block content-left %}
+<div class="container pt-4">
+    <div class="border-bottom">
+        <div class="pb-4">
+            <h4 class="pb-2 fw-bold fs-20 text-uppercase text-center">Skills</h4>
+            <ul class="list-group">
+            {% for skill in skills %}
+                <li class="list-group-item d-flex justify-content-between fw-500 fs-5">
+                    <div class="col-10">{{ skill }}</div>
+                     {% if skill.skill_img %}
+                    <div class="col-2"><img src="{{ skill.skill_img.url }}" class="img-fluid flex-end" alt=""></div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content-mid %}
+<div class="border-bottom border-1 border-dark">
+    <div class="container py-5">
+        <div class="row">
+            <h1 class="display-1 pb-5">{{ portfolio.first_name }} {{ portfolio.last_name }} Resume</h1>
+                <div class="row">
+                {% for job in jobs %}
+                    <div class="fs-4 lh-1 fw-500 pb-1">{{ job.company }}</div>
+                    <div class="fs-4 lh-1 text-muted fw-500 fst-italic pb-3">{{ job.description }}</div>
+                    <div class="d-flex justify-content-between">
+                        <div class="fs-4 lh-1 fw-500 fst-bold pb-3">{{ job.role }}</div>
+                        {% if job.end_date %}
+                            <div class="text-muted fs-4 fw-500">{{job.start_date|date:"M Y"}} - {{job.end_date| date:"M Y"}}</div>
+                        {% else %}
+                            <div class="text-muted fs-4 fw-500">{{job.start_date|date:"M Y"}} - Current</div>
+                        {% endif %}
+                    </div>
+                    <div class="fs-4 lh-1 text-muted fw-500 pb-5">{{ job.projects | markdown | safe }}</div>
+                {% endfor %}
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content-right %}
+<div class="container pt-4">
+    <div class="border-bottom mb-4">
+        <div class="pb-4">
+            <h4 class="pb-2 fw-bold fs-20 text-uppercase text-center">Education</h4>
+            <div class="row">
+            {% for education in educations %}
+                <div class="fw-500 fs-10 mb-2">
+                    <div class="d-flex justify-content-between">
+                        <div>{{ education.institution }}</div>
+                        <div>{{ education.start_date | date:"Y" }} - {{ education.end_date | date:"Y" }}</div>
+                    </div>
+                    <div> {{ education.field_of_study }}</div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="mb-4">
+        <div class="pb-4">
+            <h4 class="pb-2 fw-bold fs-20 text-uppercase text-center">Certifications</h4>
+            <div class="row">
+            {% for certification in certifications %}
+                <div class="fw-500 fs-10 border-bottom pb-3 mb-4">
+                    <div class="d-flex justify-content-between">
+                        <div>{{ certification.credential_id }}</div>
+                        <div>{{ certification.issue_date | date:"M Y" }}</div>
+                    </div>
+                    {% if certification.credential_url %}
+                    <a href="{{ certification.credential_url}}">{{ certification.name }}</a>
+                    {% endif %}
+                    <div class="d-flex justify-content-between">
+                        <div class="col-10">{{ certification.issuing_organization }}</div>
+                        {% if certification.credential_img %}
+                        <div class="col-2"><img src="{{ certification.credential_img.url }}" class="img-fluid float-end"></div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

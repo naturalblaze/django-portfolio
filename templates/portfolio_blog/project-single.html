@@ -1,0 +1,60 @@
+{% extends "../base/2-col-template.html" %}
+{% load static %}
+{% block title %}Project - {{ project.slug }}{%endblock%}
+
+{% block content-left %}
+<div class="blogger center mx-auto ">
+    <div class="conatiner px-2 mb-4">
+        {% if project.project_img %}
+            <img src="{{ project.project_img.url }}" class="img-fluid float-end">
+        {% else %}
+            <img src="{% static 'portfolio_blog/projects/default-project.png' %}" class="img-fluid float-end">
+        {% endif %}
+    </div>
+    <h1 class="fw-bold pb-2 text-center">{{ project.title }}</h1>
+    <h2 class="text-muted fs-4 text-center">{{ project.subtitle }}</h2>
+    {% if project.author.first_name %}
+        <div class="text-muted pb-2 text-center">{{ project.author.first_name }} {{ project.author.last_name}} &bull; {{ project.updated_at | date:"M d, Y" }}</div>
+    {% else %}
+        <div class="text-muted pb-2 text-center">{{ project.author }} &bull; {{ project.updated_at | date:"M d, Y" }}</div>
+    {% endif %}
+    <div class="text-bold pb-5 text-center">
+    {% for tag in project.tags.all %}
+        <button class="btn btn-outline-secondary" disabled>{{ tag.name }}</button>
+    {% endfor %}
+    </div>
+    <div class="project">{{ project.content | markdown | safe }}</div>
+</div>
+{% endblock %}
+
+{% block content-right %}
+<div class="col-12">
+    <div class="pb-3">More from {{ project.author.first_name }} {{ project.author.last_name}}</div>
+        {% for project in related %}
+        <a class="text-decoration-none" href="{{ project.get_absolute_url }}">
+            <div class="card mb-3 border-0 ps-1">
+                <div class="row">
+                    <div class="col-9 pe-2">
+                        <span class="text-dark small">
+                        {% if project.author.first_name %}
+                            {{ project.author.first_name }} {{ project.author.last_name }}
+                        {% else %}
+                            {{ project.author }}
+                        {% endif %}
+                        </span>
+                        <h1 class="mb-1 fs-6 p-0 text-dark fw-bold">{{ project.title | truncatechars:80 }}</h1>
+                    </div>
+                    <div class="col-3 pe-2">
+                        {% if project.project_img %}
+                            <img src="{{ project.project_img.url }}" class="img-fluid float-end">
+                        {% else %}
+                            <img src="{% static 'portfolio_blog/projects/default-project.png' %}" class="img-fluid float-end">
+                        {% endif %}
+                    </div>
+                </div>
+                
+            </div>
+        </a>
+        {% endfor %}
+</div>
+{% endblock %}

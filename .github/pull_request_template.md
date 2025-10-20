@@ -17,7 +17,7 @@ Fixes # (issue)
 
 - [ ] My code follows the style guidelines
 - [ ] I have updated the requirements.txt
-- [ ] I have updated the setup.py
+- [ ] I have updated the pyproject.toml
 - [ ] I have updated the requirements-dev.txt
 - [ ] I have linted my code
 - [ ] I have written unit-tests for python code

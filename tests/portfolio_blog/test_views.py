@@ -2,6 +2,7 @@
 
 import pytest
 from django.urls import reverse
+from django.core.cache import cache
 
 pytestmark = pytest.mark.django_db
 
@@ -21,73 +22,115 @@ class TestHomeView:
 
         assert "portfolio_blog/index.html" in [t.name for t in response.templates]
 
+    def test_home_view_uses_cached_wordcloud(self, client):
+        """If the wordcloud image is cached, HomeView should use it from cache."""
+        cache_key = "word_cloud_image"
+        cache_value = "cached-image-data"
+        cache.set(cache_key, cache_value, timeout=60)
 
-class TestPortfolioView:
-    """Test suite for the PortfolioView."""
+        response = client.get(reverse("homepage"))
+        assert response.status_code == 200
+        assert response.context["wordcloud"] == cache_value
 
-    def test_portfolio_view_status_code(self, client):
-        """Test that the portfolio view returns a 200 status code."""
-        response = client.get(reverse("portfolio"))
+    def test_home_view_filters_by_tag(self, project_factory, client):
+        """Test Home view with filter by tag."""
+
+        response = client.get(reverse("homepage") + "?filter_field=tagx")
+        assert response.status_code == 200
+
+
+class TestResumeView:
+    """Test suite for the ResumeView."""
+
+    def test_resume_view_status_code(self, client):
+        """Test that the resume view returns a 200 status code."""
+        response = client.get(reverse("resume"))
 
         assert response.status_code == 200
 
-    def test_portfolio_view_template(self, client):
-        """Test that the portfolio view uses the correct template."""
-        response = client.get(reverse("portfolio"))
+    def test_resume_view_template(self, client):
+        """Test that the resume view uses the correct template."""
+        response = client.get(reverse("resume"))
 
-        assert "portfolio_blog/portfolio.html" in [t.name for t in response.templates]
+        assert "portfolio_blog/resume.html" in [t.name for t in response.templates]
 
 
-class TestPostsView:
-    """Test suite for the PostsView."""
+class TestProjectsView:
+    """Test suite for the ProjectsView."""
 
-    def test_posts_view_status_code(self, client):
-        """Test that the posts view returns a 200 status code."""
-        response = client.get(reverse("posts_all"))
+    def test_projects_view_status_code(self, client):
+        """Test that the projects view returns a 200 status code."""
+        response = client.get(reverse("projects_all"))
 
         assert response.status_code == 200
 
-    def test_posts_view_template(self, client):
-        """Test that the posts view uses the correct template."""
-        response = client.get(reverse("posts_all"))
+    def test_projects_view_template(self, client):
+        """Test that the projects view uses the correct template."""
+        response = client.get(reverse("projects_all"))
 
-        assert "portfolio_blog/posts-all.html" in [t.name for t in response.templates]
+        assert "portfolio_blog/project-all.html" in [t.name for t in response.templates]
 
-    def test_posts_view_filtering(self, post_factory, client):
-        """Test that the posts view filters posts by tag."""
-        post1 = post_factory(title="Post 1", tags=["tag1"])
-        response_tag = client.get(reverse("posts_all") + "?filter_field=tag1")
-        response_title = client.get(reverse("posts_all") + "?search_field=Post+1")
+    def test_projects_view_filtering(self, project_factory, client):
+        """Test that the projects view filters projects by tag."""
+        project1 = project_factory(title="Project 1", tags=["tag1"])
+        response_tag = client.get(reverse("projects_all") + "?filter_field=tag1")
+        response_title = client.get(reverse("projects_all") + "?search_field=Project+1")
 
         assert response_tag.status_code == 200
-        assert len(response_tag.context["posts"]) == 1
-        assert response_tag.context["posts"][0] == post1
+        assert len(response_tag.context["projects"]) == 1
+        assert response_tag.context["projects"][0] == project1
         assert response_title.status_code == 200
-        assert len(response_title.context["posts"]) == 1
-        assert response_title.context["posts"][0] == post1
+        assert len(response_title.context["projects"]) == 1
+        assert response_title.context["projects"][0] == project1
+
+    def test_projects_view_htmx_returns_partial(self, client):
+        """HTMX requests to ProjectsView should return the partial template."""
+        headers = {"HTTP_HX_REQUEST": "true"}
+        response = client.get(reverse("projects_all"), **headers)
+
+        assert response.status_code == 200
+        assert "portfolio_blog/project-all-partial.html" in [t.name for t in response.templates]
 
 
-class TestPostView:
-    """Test suite for the PostView."""
+class TestProjectView:
+    """Test suite for the ProjectView."""
 
-    def test_post_view_status_code(self, post_factory, client):
-        """Test that the post view returns a 200 status code."""
-        post = post_factory(slug="test-post")
-        response = client.get(reverse("post_single", args=["test-post"]))
+    def test_project_view_status_code(self, project_factory, client):
+        """Test that the project view returns a 200 status code."""
+        project = project_factory(slug="test-project")
+        response = client.get(reverse("project_single", args=["test-project"]))
 
         assert response.status_code == 200
 
-    def test_post_view_template(self, post_factory, client):
-        """Test that the post view uses the correct template."""
-        post = post_factory(slug="test-post")
-        response = client.get(reverse("post_single", args=["test-post"]))
+    def test_project_view_template(self, project_factory, client):
+        """Test that the project view uses the correct template."""
+        project = project_factory(slug="test-project")
+        response = client.get(reverse("project_single", args=["test-project"]))
 
-        assert "portfolio_blog/post-single.html" in [t.name for t in response.templates]
+        assert "portfolio_blog/project-single.html" in [t.name for t in response.templates]
 
-    def test_post_view_no_post_img(self, post_factory, client):
-        """Test that the post view sets a default image if none is provided."""
-        post = post_factory(slug="test-post", post_img="")
-        response = client.get(reverse("post_single", args=["test-post"]))
+    def test_project_view_no_project_img(self, project_factory, client):
+        """Test that the project view sets a default image if none is provided."""
+        project = project_factory(slug="test-project", project_img="")
+        response = client.get(reverse("project_single", args=["test-project"]))
 
         assert response.status_code == 200
-        assert response.context["post_img"] == "default-post.png"
+        assert response.context["project_img"] == "default-project.png"
+
+
+class TestAboutView:
+    """Test suite for the AboutView."""
+
+    def test_about_view_status_code(self, portfolio_factory, client):
+        """Test that the about view returns a 200 status code."""
+        portfolio = portfolio_factory()
+        response = client.get(reverse("about"))
+
+        assert response.status_code == 200
+
+    def test_about_view_template(self, portfolio_factory, client):
+        """Test that the project view uses the correct template."""
+        portfolio = portfolio_factory()
+        response = client.get(reverse("about"))
+
+        assert "portfolio_blog/about.html" in [t.name for t in response.templates]

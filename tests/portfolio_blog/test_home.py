@@ -21,8 +21,8 @@ class TestHomePage:
         assertTemplateUsed(response, "portfolio_blog/index.html")
 
     def test_post_htmx_fragment(self, client):
-        """Test HTMX request for post list fragment."""
+        """Test HTMX request for project list fragment."""
         headers = {"HTTP_HX_REQUEST": "true"}
         response = client.get(self.homepage, **headers)
 
-        assertTemplateUsed(response, "portfolio_blog/post-list-elements.html")
+        assertTemplateUsed(response, "portfolio_blog/project-list-elements.html")

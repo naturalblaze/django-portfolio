@@ -1,20 +1,18 @@
 <div class="mb-4">
-    <div class="border-bottom">
-        <div class="pb-4">
-            <h4 class="pb-2 fw-bold fs-14 text-uppercase">Filter by Blog Post Tags</h4>
-            <form method="get">
-            {% for tag in tags %}
-                {% if request.GET.filter_field == tag.name %}
-                    <button type="submit" class="btn btn-success mx-auto mb-2" name="filter_field" value="{{ tag.name }}">
-                        {{tag.name}}
-                    </button>
-                {% else %}
-                    <button type="submit" class="btn btn-outline-success mx-auto mb-2" name="filter_field" value="{{ tag.name }}">
-                        {{tag.name}}
-                    </button>
-                {% endif %}
-            {% endfor %}
-            </form>
-        </div>
+    <div class="pb-4">
+        <h4 class="pb-2 fw-bold fs-14 text-uppercase">Filter by Project Tags</h4>
+        <form method="get" class="mx-auto text-center">
+        {% for tag in tags %}
+            {% if request.GET.filter_field == tag.name %}
+                <button type="submit" class="btn btn-success mx-auto mb-2" name="filter_field_remove" value="{{ tag.name }}">
+                    {{tag.name}}
+                </button>
+            {% else %}
+                <button type="submit" class="btn btn-outline-success mx-auto mb-2" name="filter_field" value="{{ tag.name }}">
+                    {{tag.name}}
+                </button>
+            {% endif %}
+        {% endfor %}
+        </form>
     </div>
 </div>

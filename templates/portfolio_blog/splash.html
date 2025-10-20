@@ -2,12 +2,39 @@
     <div class="container py-5 px-2">
         <div class="row">
             <div class="col-12 col-md-6 py-1 py-md-5 text-center text-md-start">
-                <h1 class="display-1">Blaze Bryant</h1>
-                <h2 class="display-2"> Blog, Portfolio, & Projects</h2>
-                <p class="fs-4 lh-1 text-muted fw-500 pb-5">
-                    Statistics on how this site was built, pulled from the database.
-                </p>
-                <a class="btn btn-dark rounded-pill fw-500 fs-5 px-4" href="posts/" role="button">Start Reading</a>
+                <h1 class="display-1">{{ portfolio.first_name }} {{ portfolio.last_name }} Portfolio</h1>
+                <h2 class="display-2"> Resume & Projects</h2>
+                <div class="my-3">
+                    <button class="btn btn-outline-success fs-4 lh-1 text-muted fw-500 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDjangoSite" aria-expanded="false" aria-controls="collapseDjangoSite">
+                        Statistics on how this site was built...
+                    </button>
+                    <div class="collapse mb-3" id="collapseDjangoSite">
+                        <div class="card card-body fs-4">
+                            Containerized Django application using:
+                            <ul>
+                                <li>Django {{ dependencies.django }}</li>
+                                <ul>
+                                {% for dep, ver in dependencies.items %}
+                                    {% if dep != "django" and dep != "gunicorn" and dep != "github_url" %}
+                                        <li>{{ dep }}: {{ ver }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                                <li>Gunicorn {{ dependencies.gunicorn }} (Prod)</li>
+                                <li>SQLite (local development) or PostgreSQL (Docker deployment)</li>
+                                <li>Bootstrap 5</li>
+                            </ul>
+                            <p>Deployed with Docker Compose Stack: Nginx (django-nginx), Django (django-portfolio), PostgreSQL (django-postgres)</p>
+                            <p>Source code available on <a href="{{ dependencies.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-dark rounded-pill fw-500 fs-5 px-4 mt-3" href="projects/" role="button">Browse Projects</a>
+            </div>
+            <div class="col-8 col-md-6 py-1 mx-auto">
+                {% if wordcloud %}
+                    <img src="{{ wordcloud }}" class="img-fluid rounded shadow">
+                {% endif %}
             </div>
         </div>
     </div>

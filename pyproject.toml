@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 name = "django-portfolio"
 dynamic = ["readme"]
 version = "0.1.0"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 description = "Django Portfolio for Blaze Bryant"
 keywords = [
 ]
@@ -34,41 +34,50 @@ classifiers = [
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",]
 
 
 dependencies = [
-    "django",
-    "django-markdownx",
-    "django-environ",
+    "django>=5.2.7",
+    "django-markdownx>=4.0.9",
+    "django-environ>=0.12.0",
     "django-htmx>=1.23.2",
     "django-taggit>=6.1.0",
     "markdown>=3.8.2",
     "django-extensions>=4.1",
     "pymdown-extensions>=10.16.1",
+    "wordcloud>=1.9.4",
+    "matplotlib>=3.10.6",
+    "pillow>=11.3.0",
+    "django-visit-count>=1.2.1",
+    "toml>=0.10.2",
 ]
 
 [dependency-groups]
+prod = [
+    "gunicorn>=23.0.0",
+    "psycopg2-binary>=2.9.10",
+]
 dev = [
-    "black",
-    "tomli",
-    "pytest-cov",
-    "pytest-django",
-    "sphinx",
-    "pylint",
-    "myst-parser",
-    "sphinx_rtd_theme",
-    "sphinxcontrib-mermaid",
-    "httpx",
-    "bandit",
-    "ruff",
+    "black>=25.1.0",
+    "tomli>=2.2.1",
+    "pytest-cov>=6.2.1",
+    "pytest-django>=4.11.1",
+    "sphinx>=8.2.3",
+    "pylint>=3.3.8",
+    "myst-parser>=4.0.1",
+    "sphinx_rtd_theme>=3.0.2",
+    "sphinxcontrib-mermaid>=1.0.0",
+    "httpx>=0.28.1",
+    "bandit>=1.8.6",
+    "ruff>=0.12.11",
     "factory-boy>=3.3.3",
     "pytest-factoryboy>=2.8.1",
     "pytest-dotenv>=0.5.2",
 ]
+
 [project.urls]
 Documentation = "https://django-portfolio.readthedocs.io/en/latest/"
 Source = "https://github.com/naturalblaze/django-portfolio"

@@ -1,11 +1,11 @@
-"""Factory for creating Post instances for testing purposes."""
+"""Factory for creating Project instances for testing purposes."""
 
 import random
 import factory
 from factory import fuzzy
 from factory.faker import faker
 from django.contrib.auth.models import User
-from portfolio_blog.models import Post
+from portfolio_blog.models import Project
 
 FAKE = faker.Faker()
 SKILLS = [
@@ -69,13 +69,13 @@ SKILLS = [
 ]
 
 
-class PostFactory(factory.django.DjangoModelFactory):
-    """Factory for creating Post instances."""
+class ProjectFactory(factory.django.DjangoModelFactory):
+    """Factory for creating Project instances."""
 
     class Meta:  # pylint: disable=too-few-public-methods
-        """Meta class for PostFactory."""
+        """Meta class for ProjectFactory."""
 
-        model = Post
+        model = Project
 
     title = factory.Faker("sentence", nb_words=12)
     subtitle = factory.Faker("sentence", nb_words=6)
@@ -94,7 +94,7 @@ class PostFactory(factory.django.DjangoModelFactory):
 
     @factory.post_generation
     def tags(self, create: str, extracted: list, **kwargs):  # pylint: disable=unused-argument
-        """Add tags to the post instance.
+        """Add tags to the project instance.
 
         Args:
             create (str): _indicates if instance is created_

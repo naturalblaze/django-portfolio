@@ -5,79 +5,104 @@ import pytest
 pytestmark = pytest.mark.django_db
 
 
-class TestPostModel:
-    """Test suite for the Post model."""
+class TestPortfolioModel:
+    """Test suite for the Portfolio model."""
 
-    def test_str_method(self, post_factory):
-        """Test the __str__ method of the Post model."""
-        post = post_factory(title="Test Post")
+    def test_str_method(self, portfolio_factory):
+        """Test the __str__ method of the Portfolio model."""
+        portfolio = portfolio_factory(first_name="John", last_name="Doe")
 
-        assert post.__str__() == "Test Post"
+        assert portfolio.__str__() == "John Doe"
 
-    def test_add_tags(self, post_factory):
-        """Test adding tags to a Post instance."""
-        post = post_factory(title="Test Post", tags=["test-tag"])
+    def test_clean_enforces_single_instance(self, portfolio_factory):
+        """Ensure Portfolio.clean() raises ValidationError when a second instance is created."""
+        from django.core.exceptions import ValidationError
+        from portfolio_blog.models import Portfolio
 
-        assert post.tags.count() == 1
-        assert post.tags.first().name == "test-tag"
+        # Create the first (allowed) instance
+        first = portfolio_factory(first_name="Alice", last_name="Smith")
 
-    def test_get_absolute_url(self, post_factory):
-        """Test the get_absolute_url method of the Post model."""
-        post = post_factory(slug="test-post")
+        # Build a second instance without saving
+        second = Portfolio(first_name="Bob", last_name="Jones", introduction="x", professional_experience="y")
 
-        assert post.get_absolute_url() == "/posts/test-post/"
+        with pytest.raises(ValidationError):
+            second.full_clean()
 
 
-class TestPortfolioSkillsModel:
-    """Test suite for the PortfolioSkills model."""
+class TestProjectModel:
+    """Test suite for the Project model."""
 
-    def test_str_method(self, portfolio_skills_factory):
-        """Test the __str__ method of the PortfolioSkills model."""
-        skill = portfolio_skills_factory(name="Python")
+    def test_str_method(self, project_factory):
+        """Test the __str__ method of the Project model."""
+        project = project_factory(title="Test Project")
+
+        assert project.__str__() == "Test Project"
+
+    def test_add_tags(self, project_factory):
+        """Test adding tags to a Project instance."""
+        project = project_factory(title="Test Project", tags=["test-tag"])
+
+        assert project.tags.count() == 1
+        assert project.tags.first().name == "test-tag"
+
+    def test_get_absolute_url(self, project_factory):
+        """Test the get_absolute_url method of the Project model."""
+        project = project_factory(slug="test-project")
+
+        assert project.get_absolute_url() == "/projects/test-project/"
+
+
+class TestResumeSkillsModel:
+    """Test suite for the ResumeSkills model."""
+
+    def test_str_method(self, resume_skills_factory):
+        """Test the __str__ method of the ResumeSkills model."""
+        skill = resume_skills_factory(name="Python")
 
         assert skill.__str__() == "Python"
 
-    def test_add_tags(self, portfolio_skills_factory):
-        """Test adding tags to a PortfolioSkills instance."""
-        skill = portfolio_skills_factory(name="Python", tags=["programming"])
+    def test_add_tags(self, resume_skills_factory):
+        """Test adding tags to a ResumeSkills instance."""
+        skill = resume_skills_factory(name="Python", tags=["programming"])
 
         assert skill.tags.count() == 1
         assert skill.tags.first().name == "programming"
 
     def test_proficiency_range(self):
         """Test that the proficiency field is within the valid range."""
-        from portfolio_blog.models import PortfolioSkills
+        from django.core.exceptions import ValidationError
+        from portfolio_blog.models import ResumeSkills
 
-        instance = PortfolioSkills(name="Invalid Skill", proficiency=11)
-        with pytest.raises(ValueError):
+        instance = ResumeSkills(name="Invalid Skill", proficiency=11)
+        with pytest.raises(ValidationError):
             instance.full_clean()
 
 
-class TestPortfolioJobsModel:
-    """Test suite for the PortfolioJobs model."""
+class TestResumeJobsModel:
+    """Test suite for the ResumeJobs model."""
 
-    def test_str_method(self, portfolio_jobs_factory):
-        """Test the __str__ method of the PortfolioJobs model."""
-        job = portfolio_jobs_factory(company="Tech Corp", role="Developer")
+    def test_str_method(self, resume_jobs_factory):
+        """Test the __str__ method of the ResumeJobs model."""
+        job = resume_jobs_factory(company="Tech Corp", role="Developer")
 
         assert job.__str__() == "Tech Corp - Developer"
 
 
-class TestPortfolioEducationModel:
-    """Test suite for the PortfolioEducation model."""
+class TestResumeEducationModel:
+    """Test suite for the ResumeEducation model."""
 
-    def test_str_method(self, portfolio_education_factory):
-        """Test the __str__ method of the PortfolioEducation model."""
-        education = portfolio_education_factory(institution="University", degree="BSc Computer Science")
+    def test_str_method(self, resume_education_factory):
+        """Test the __str__ method of the ResumeEducation model."""
+        education = resume_education_factory(institution="University", degree="BSc Computer Science")
 
         assert education.__str__() == "University - BSc Computer Science"
 
 
-class TestPortfolioCertificationsModel:
-    """Test suite for the PortfolioCertifications model."""
+class TestResumeCertificationsModel:
+    """Test suite for the ResumeCertifications model."""
 
-    def test_str_method(self, portfolio_certifications_factory):
-        """Test the __str__ method of the PortfolioCertifications model."""
-        certification = portfolio_certifications_factory(name="Django Certification")
+    def test_str_method(self, resume_certifications_factory):
+        """Test the __str__ method of the ResumeCertifications model."""
+        certification = resume_certifications_factory(name="Django Certification")
 
         assert certification.__str__() == "Django Certification"
