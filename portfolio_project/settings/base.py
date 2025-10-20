@@ -14,21 +14,25 @@ import os
 from pathlib import Path
 import environ
 
-env = environ.Env()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-env.read_env(str(BASE_DIR / ".env"))
+
+# Take environment variables from .env file
+env_name = os.environ.get("DJANGO_ENV", "local")
+env = environ.Env(DEBUG=(bool, False))
+env.read_env(str(BASE_DIR / f".env.{env_name}"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default=False)
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[])
 
 # Application definition
 INSTALLED_APPS = [
@@ -78,6 +82,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "portfolio_project.wsgi.application"
 
+# DATABASES
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+DATABASES = {"default": env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3")}
+
+# CACHES
+# https://docs.djangoproject.com/en/5.2/ref/settings/#caches
+CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -99,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "EST"
+TIME_ZONE = "America/New_York"
 
 USE_I18N = True
 
@@ -109,8 +121,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 STATIC_URL = "static/"
 
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+]
+
+# Media files (Uploaded by users)
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+MEDIAFILES_DIRS = [
+    os.path.join(BASE_DIR, "media"),
 ]
 
 # Default primary key field type

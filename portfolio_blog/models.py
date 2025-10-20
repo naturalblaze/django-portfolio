@@ -1,13 +1,48 @@
 """Models for the portfolio_blog application."""
 
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 from taggit.managers import TaggableManager
 
 
-class Post(models.Model):
-    """Model representing a blog post."""
+class Portfolio(models.Model):
+    """Model representing portfolio person"""
+
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
+    email = models.EmailField(max_length=254, null=True, blank=True)
+    linkedin_url = models.URLField(max_length=200, null=True, blank=True)
+    github_url = models.URLField(max_length=200, null=True, blank=True)
+    portfolio_img = models.ImageField(upload_to="portfolio_blog/about/", null=True, blank=True)
+    introduction = models.TextField()
+    professional_experience = models.TextField()
+    total_visits = models.PositiveIntegerField(default=0)
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """Meta options for the Portfolio model."""
+
+        verbose_name = "Portfolio"
+
+    def clean(self):
+        """Ensure only one instance of Portfolio exists."""
+        if Portfolio.objects.exists() and self.pk != Portfolio.objects.first().pk:  # pylint: disable=no-member
+            super().clean()
+            raise ValidationError("Only one instance of Portfolio model is allowed.")
+
+    def __str__(self) -> str:
+        """String representation of the Portfolio model.
+
+        Returns:
+            str: The first and last name of the project.
+        """
+        return str(self.first_name + " " + self.last_name)
+
+
+class Project(models.Model):
+    """Model representing a blog project."""
 
     status_options = (
         ("draft", "Draft"),
@@ -17,57 +52,55 @@ class Post(models.Model):
     title = models.CharField(max_length=250)
     subtitle = models.CharField(max_length=100)
     slug = models.SlugField(max_length=250, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="post_author")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="project_author")
     content = models.TextField()
-    post_img = models.CharField(max_length=200, null=True, blank=True)
+    project_img = models.ImageField(upload_to="portfolio_blog/projects/", null=True, blank=True)
     status = models.CharField(max_length=10, choices=status_options, default="draft")
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     tags = TaggableManager()
 
     def get_absolute_url(self):
-        """Return the URL to access a particular post instance."""
-        return reverse("post_single", args=[self.slug])
+        """Return the URL to access a particular project instance."""
+        return reverse("project_single", args=[self.slug])
 
     class Meta:  # pylint: disable=too-few-public-methods
-        """Meta options for the Post model."""
+        """Meta options for the Project model."""
 
         ordering = ["-created_at"]
-        verbose_name = "Post"
-        verbose_name_plural = "Posts"
+        verbose_name = "Project"
+        verbose_name_plural = "Projects"
 
     def __str__(self) -> str:
-        """String representation of the Post model.
+        """String representation of the Project model.
 
         Returns:
-            str: The title of the post.
+            str: The title of the project.
         """
         return str(self.title)
 
 
-class PortfolioSkills(models.Model):
-    """Model representing a portfolio skill."""
+class ResumeSkills(models.Model):
+    """Model representing a resume skill."""
 
     name = models.CharField(max_length=100)
-    proficiency = models.IntegerField(help_text="Proficiency level from 1 to 10")
+    proficiency = models.IntegerField(
+        help_text="Proficiency level from 1 to 10", validators=[MinValueValidator(1), MaxValueValidator(10)]
+    )
+    skill_img = models.ImageField(upload_to="portfolio_blog/skills/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     tags = TaggableManager()
 
-    def clean(self):
-        """Ensure proficiency is between 1 and 10."""
-        if not 1 <= self.proficiency <= 10:
-            raise ValueError("Proficiency must be between 1 and 10")
-
     class Meta:  # pylint: disable=too-few-public-methods
-        """Meta options for the PortfolioSkills model."""
+        """Meta options for the ResumeSkills model."""
 
         ordering = ["-name"]
-        verbose_name = "Portfolio Skill"
-        verbose_name_plural = "Portfolio Skills"
+        verbose_name = "Resume Skill"
+        verbose_name_plural = "Resume Skills"
 
     def __str__(self) -> str:
-        """String representation of the PortfolioSkills model.
+        """String representation of the ResumeSkills model.
 
         Returns:
             str: The name of the skill.
@@ -75,8 +108,8 @@ class PortfolioSkills(models.Model):
         return str(self.name)
 
 
-class PortfolioJobs(models.Model):
-    """Model representing a portfolio job."""
+class ResumeJobs(models.Model):
+    """Model representing a resume job."""
 
     company = models.CharField(max_length=50)
     role = models.CharField(max_length=100)
@@ -88,14 +121,14 @@ class PortfolioJobs(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:  # pylint: disable=too-few-public-methods
-        """Meta options for the PortfolioJobs model."""
+        """Meta options for the ResumeJobs model."""
 
         ordering = ["-start_date"]
-        verbose_name = "Portfolio Job"
-        verbose_name_plural = "Portfolio Jobs"
+        verbose_name = "Resume Job"
+        verbose_name_plural = "Resume Jobs"
 
     def __str__(self) -> str:
-        """String representation of the PortfolioJobs model.
+        """String representation of the ResumeJobs model.
 
         Returns:
             str: The company and role of the job.
@@ -103,8 +136,8 @@ class PortfolioJobs(models.Model):
         return f"{self.company} - {self.role}"
 
 
-class PortfolioEducation(models.Model):
-    """Model representing a portfolio education entry."""
+class ResumeEducation(models.Model):
+    """Model representing a resume education entry."""
 
     institution = models.CharField(max_length=100)
     degree = models.CharField(max_length=100)
@@ -115,14 +148,14 @@ class PortfolioEducation(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:  # pylint: disable=too-few-public-methods
-        """Meta options for the PortfolioEducation model."""
+        """Meta options for the ResumeEducation model."""
 
         ordering = ["-start_date"]
-        verbose_name = "Portfolio Education"
-        verbose_name_plural = "Portfolio Education"
+        verbose_name = "Resume Education"
+        verbose_name_plural = "Resume Education"
 
     def __str__(self) -> str:
-        """String representation of the PortfolioEducation model.
+        """String representation of the ResumeEducation model.
 
         Returns:
             str: The institution and degree of the education entry.
@@ -130,27 +163,27 @@ class PortfolioEducation(models.Model):
         return f"{self.institution} - {self.degree}"
 
 
-class PortfolioCertifications(models.Model):
-    """Model representing a portfolio certification."""
+class ResumeCertifications(models.Model):
+    """Model representing a resume certification."""
 
     name = models.CharField(max_length=100)
     issuing_organization = models.CharField(max_length=100)
     issue_date = models.DateField()
     credential_id = models.CharField(max_length=100, null=True, blank=True)
     credential_url = models.URLField(max_length=200, null=True, blank=True)
-    credential_img = models.CharField(max_length=200, null=True, blank=True)
+    credential_img = models.ImageField(upload_to="portfolio_blog/certifications/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:  # pylint: disable=too-few-public-methods
-        """Meta options for the PortfolioCertifications model."""
+        """Meta options for the ResumeCertifications model."""
 
         ordering = ["-issue_date"]
-        verbose_name = "Portfolio Certification"
-        verbose_name_plural = "Portfolio Certifications"
+        verbose_name = "Resume Certification"
+        verbose_name_plural = "Resume Certifications"
 
     def __str__(self) -> str:
-        """String representation of the PortfolioCertifications model.
+        """String representation of the ResumeCertifications model.
 
         Returns:
             str: The name of the certification.

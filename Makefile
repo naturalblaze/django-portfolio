@@ -50,9 +50,6 @@ pylint:
 pytest:
 	@uv run pytest --cov -vvv
 
-django-test:
-	@uv run python manage.py test $(APP)
-
 ruff-format:
 	@uv run ruff format $(PROJECT)/
 	@uv run ruff format $(APP)/
@@ -61,17 +58,15 @@ ruff-format:
 
 ruff-lint:
 	@uv run ruff check $(PROJECT)/
-	@uv run ruff format $(APP)/
-
-dev-run:
-	@uv run python manage.py runserver
+	@uv run ruff check $(APP)/
 
 check-security:
 	@uv run bandit -c pyproject.toml -r .
 
 pip-export:
-	@uv export --no-dev --no-emit-project --no-editable > requirements.txt
-	@uv export --no-emit-project --no-editable > requirements-dev.txt
+	@uv export --no-dev --no-group prod --no-emit-project --no-editable > requirements.txt
+	@uv export --no-group prod --no-emit-project --no-editable > requirements-dev.txt
+	@uv export --no-dev --group prod --no-emit-project --no-editable > requirements-prod.txt
 
 gh-pages:
 	@rm -rf ./docs/source/code
@@ -79,17 +74,23 @@ gh-pages:
 	@uv run sphinx-apidoc -o ./docs/source/code ./$(APP)
 	@uv run sphinx-build ./docs ./docs/gh-pages
 
+create-superuser:
+	@uv run python manage.py createsuperuser
+
+dev-run:
+	@uv run python manage.py runserver
+
 build-container:
-	@cd containers && podman build --ssh=default --build-arg=build_branch=develop -t django-portfolio:latest -f Containerfile
+	@uv run docker compose --env-file .env.prod up -d --build
 
 start-container:
-	@podman run -itd --name django-portfolio -p 8080:8080 localhost/django-portfolio:latest
+	@uv run docker compose start
+
+superuser-container:
+	@uv run docker exec -it django-portfolio python manage.py createsuperuser
 
 stop-container:
-	@podman stop django-portfolio
+	@uv run docker compose stop
 
 remove-container:
-	@podman rm django-portfolio
-
-
-
+	@uv run docker compose down -v

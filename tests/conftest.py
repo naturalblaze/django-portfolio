@@ -2,15 +2,17 @@
 
 from pytest_factoryboy import register
 from .factories import (
-    PostFactory,
-    PortfolioSkillsFactory,
-    PortfolioJobsFactory,
-    PortfolioEducationFactory,
-    PortfolioCertificationsFactory,
+    PortfolioFactory,
+    ProjectFactory,
+    ResumeSkillsFactory,
+    ResumeJobsFactory,
+    ResumeEducationFactory,
+    ResumeCertificationsFactory,
 )
 
-register(PostFactory)
-register(PortfolioSkillsFactory)
-register(PortfolioJobsFactory)
-register(PortfolioEducationFactory)
-register(PortfolioCertificationsFactory)
+register(PortfolioFactory)
+register(ProjectFactory)
+register(ResumeSkillsFactory)
+register(ResumeJobsFactory)
+register(ResumeEducationFactory)
+register(ResumeCertificationsFactory)

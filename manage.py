@@ -8,7 +8,7 @@ from portfolio_project.settings import base
 
 def main():
     """Run administrative tasks."""
-    if base.DEBUG:
+    if base.env_name == "local":
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_project.settings.local')
     else:
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_project.settings.production')

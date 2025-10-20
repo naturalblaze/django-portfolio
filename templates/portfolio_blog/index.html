@@ -4,10 +4,10 @@
 {% block template %}
 {% include "../base/navbar.html" %}
 {% include "./splash.html" %}
-<div class="container pt-5">
+<div class="container-fluid pt-5 px-4">
     <div class="row">
         <div class="col-12 col-lg-8">
-            {% include "./post-list-elements.html" %}
+            {% include "./project-list-elements.html" %}
         </div>
         <div class="d-none d-lg-block col-4">
             {% sidebar_tag_cloud %}

@@ -1,25 +1,27 @@
 {% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-black">
-  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-light"></nav> -->
   <div class="container">
-    <img src="{% static 'portfolio_blog/nb-icon.png' %}" alt="Naturalblaze's Blog Logo" height=75px class="d-inline-block align-text-top">
-    <a class="navbar-brand logo fs-3" href="/">Django Blog/Portfolio</a>
+    <img src="{% static 'portfolio_blog/nb-icon.png' %}" alt="Naturalblaze's Portfolio Logo" height=75px class="d-inline-block align-text-top">
+    <a class="navbar-brand logo fs-1" href="/">Django Portfolio</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
          <li class="nav-item">
-          <a class="nav-link" href="/portfolio">Portfolio</a>
+          <a class="nav-link" href="/resume/">Resume</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/posts">Blog Posts</a>
+          <a class="nav-link" href="/projects/">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about/">About Me</a>
         </li>
       </ul>
-      <form class="d-flex" role="search" method="get" action="{% url 'posts_all' %}">
+      <form class="d-flex" role="search" method="get" action="{% url 'projects_all' %}">
         <input class="form-control me-2" type="search" name="search_field" placeholder="Search" aria-label="Search"/>
         <button class="btn btn-outline-success" type="submit">Search</button>
-        <!-- <a href="posts" class="btn btn-outline-success">search</a> -->
       </form>
     </div>
   </div>

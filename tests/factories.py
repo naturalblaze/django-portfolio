@@ -3,12 +3,29 @@
 import factory
 from django.contrib.auth.models import User
 from portfolio_blog.models import (
-    Post,
-    PortfolioSkills,
-    PortfolioJobs,
-    PortfolioEducation,
-    PortfolioCertifications,
+    Portfolio,
+    Project,
+    ResumeSkills,
+    ResumeJobs,
+    ResumeEducation,
+    ResumeCertifications,
 )
+
+
+class PortfolioFactory(factory.django.DjangoModelFactory):
+    """Portfolio factory for tests."""
+
+    class Meta:
+        """Meta class for PortfolioFactory."""
+
+        model = Portfolio
+        skip_postgeneration_save = True
+
+    first_name = "x"
+    last_name = "x"
+    email = "test@email.com"
+    introduction = "x"
+    professional_experience = "x"
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -25,13 +42,13 @@ class UserFactory(factory.django.DjangoModelFactory):
     is_staff = True
 
 
-class PostFactory(factory.django.DjangoModelFactory):
-    """Post factory for tests."""
+class ProjectFactory(factory.django.DjangoModelFactory):
+    """Project factory for tests."""
 
     class Meta:
-        """Meta class for PostFactory."""
+        """Meta class for ProjectFactory."""
 
-        model = Post
+        model = Project
         skip_postgeneration_save = True
 
     title = "x"
@@ -39,7 +56,7 @@ class PostFactory(factory.django.DjangoModelFactory):
     slug = "x"
     author = factory.SubFactory(UserFactory)
     content = "x"
-    post_img = "x"
+    project_img = "x"
     status = "published"
 
     @factory.post_generation
@@ -60,13 +77,13 @@ class PostFactory(factory.django.DjangoModelFactory):
             self.tags.add("default-tag")
 
 
-class PortfolioSkillsFactory(factory.django.DjangoModelFactory):
-    """PortfolioSkills factory for tests."""
+class ResumeSkillsFactory(factory.django.DjangoModelFactory):
+    """ResumeSkills factory for tests."""
 
     class Meta:
-        """Meta class for PortfolioSkillsFactory."""
+        """Meta class for ResumeSkillsFactory."""
 
-        model = PortfolioSkills
+        model = ResumeSkills
         skip_postgeneration_save = True
 
     name = "x"
@@ -90,13 +107,13 @@ class PortfolioSkillsFactory(factory.django.DjangoModelFactory):
             self.tags.add("default-tag")
 
 
-class PortfolioJobsFactory(factory.django.DjangoModelFactory):
-    """PortfolioJobs factory for tests."""
+class ResumeJobsFactory(factory.django.DjangoModelFactory):
+    """ResumeJobs factory for tests."""
 
     class Meta:
-        """Meta class for PortfolioJobsFactory."""
+        """Meta class for ResumeJobsFactory."""
 
-        model = PortfolioJobs
+        model = ResumeJobs
         skip_postgeneration_save = True
 
     company = "x"
@@ -106,13 +123,13 @@ class PortfolioJobsFactory(factory.django.DjangoModelFactory):
     start_date = "2020-01-01"
 
 
-class PortfolioEducationFactory(factory.django.DjangoModelFactory):
-    """PortfolioEducation factory for tests."""
+class ResumeEducationFactory(factory.django.DjangoModelFactory):
+    """ResumeEducation factory for tests."""
 
     class Meta:
-        """Meta class for PortfolioEducationFactory."""
+        """Meta class for ResumeEducationFactory."""
 
-        model = PortfolioEducation
+        model = ResumeEducation
         skip_postgeneration_save = True
 
     institution = "x"
@@ -122,13 +139,13 @@ class PortfolioEducationFactory(factory.django.DjangoModelFactory):
     end_date = "2024-01-01"
 
 
-class PortfolioCertificationsFactory(factory.django.DjangoModelFactory):
-    """PortfolioCertifications factory for tests."""
+class ResumeCertificationsFactory(factory.django.DjangoModelFactory):
+    """ResumeCertifications factory for tests."""
 
     class Meta:
-        """Meta class for PortfolioCertificationsFactory."""
+        """Meta class for ResumeCertificationsFactory."""
 
-        model = PortfolioCertifications
+        model = ResumeCertifications
         skip_postgeneration_save = True
 
     name = "x"

@@ -60,6 +60,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+db.sqlite3.bak
 
 # Flask stuff:
 instance/
@@ -102,7 +103,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+.env*
 .venv
 env/
 venv/
@@ -137,9 +138,9 @@ dmypy.json
 # No temp_*.py files
 temp_*.py
 
-# Django
-
-
 # Ruff
 .ruff_cache
 
+# Django 
+staticfiles/
+media/

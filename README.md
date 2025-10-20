@@ -1,13 +1,24 @@
 # django-portfolio
 
-## Description
-
-* Django Portfolio for Blaze Bryant
-
 | Branch | Tests |
 | ------ | ----- |
 | develop | [![Unit-Testing, Coverage, Linting](https://github.com/naturalblaze/django-portfolio/actions/workflows/test-coverage-lint-uv.yml/badge.svg?branch=develop)](https://github.com/naturalblaze/django-portfolio/actions/workflows/test-coverage-lint-uv.yml) |
 | main | [![Unit-Testing, Coverage, Linting](https://github.com/naturalblaze/django-portfolio/actions/workflows/test-coverage-lint-uv.yml/badge.svg)](https://github.com/naturalblaze/django-portfolio/actions/workflows/test-coverage-lint-uv.yml) |
+
+## Description
+
+This Python project uses the Django framework to create a portfolio website.
+
+### Django Portfolio Models
+
+| Models | Keys | Description |
+| ------ | ---- | ----------- |
+| Portfolio | <ul><li>First Name</li><li>Last Name</li><li>Email `Optional`</li><li>Linkedin url `Optional`</li><li>Github url `Optional`</li><li>Portfolio img `Optional`</li><li>Introduction</li><li>Professional experience</li><li>Total visits `Default=0`</li></ul> | Portfolio personal information |
+| Projects | <ul><li>Title</li><li>Subtitle</li><li>Slug</li><li>Author</li><li>Content</li><li>Project img `Optional`</li><li>Status `Options:draft\|published`</li><li>Tags `Comma-separated`</li></ul> | Projects highlighting professional experience and accomplishments |
+| Resume Certifications | <ul><li>Name</li><li>Issuing Organization</li><li>Issue date</li><li>Credential id `Optional`</li><li>Credential url `Optional`</li><li>Credential img `Optional`</li></ul> | Professional certifications for Resume page |
+| Resume Education | <ul><li>Institution</li><li>Degree</li><li>Field of study</li><li>Start date</li><li>End date `Date or Current`</li></ul> | Educational experience for Resume page |
+| Resume Jobs | <ul><li>Company</li><li>Role</li><li>Description</li><li>Projects</li><li>Start date</li><li>End date `Date or Current`</li></ul> | Professional work experience for Resume page |
+| Resume Skills | <ul><li>Name</li><li>Proficiency `Options:1 to 10`</li><li>Skill img `Optional`</li><li>Tags `Comma-separated`</li></ul> | Professional skills for Resume page |
 
 ## Setup Project and test server with `UV`
 
@@ -29,16 +40,60 @@ source .venv/bin/activate
 uv sync
 ```
 
-* Environment variables `.env`
+* Environment variables `.env.local`
 
+```text
+# Development environment variables
+DJANGO_ENV=local
+DJANGO_DEBUG=True
+DJANGO_SECRET_KEY=super-secret-dev-key
+DJANGO_ALLOWED_HOSTS=localhost,0.0.0.0,127.0.0.1
+DATABASE_URL=sqlite:///db.sqlite3
+```
+
+* Create a superuser account
+
+```bash
+make create-superuser
+```
 
 * Test starting the server
 
 ```bash
-python manage.py runserver
+make dev-run
 ```
 
 * Test server is running: [Django Local Server](http://127.0.0.1:8000/)
+
+> [!NOTE]
+> You will need to create `Portfolio` model before the `About Me` page will load because it relies on the `Total visits` attribute to exist
+> [Django Local Admin Server](http://127.0.0.1:8000/admin/)
+
+## Environment Variables
+
+Two environment variables files are supported for local development `.env.local` and production deployment `.env.prod`
+
+| Name | Environments | Default Value | Description |
+| ---- | ------------ | ------------- | ----------- |
+| DJANGO_ENV | All | local | Django Environment `local` or `prod` |
+| DJANGO_SECRET_KEY | All | None | Django Secret Key used for cryptographic signing|
+| DJANGO_DEBUG | All | False | Django debug mode |
+| DJANGO_ALLOWED_HOSTS | All | [] | A list of strings representing the host/domain names that this Django site can serve. |
+| DATABASE_URL | All | sqlite:///db.sqlite3 | PostgreSQL database URL |
+| CSRF_TRUSTED_ORIGINS | Prod | [http://localhost:8000] | A list of trusted origins for unsafe requests |
+
+## Populate data with projects (defaults to 20 with no `script-args`)
+
+```bash
+python manage.py runscript populate_projects --script-args="100"
+```
+
+## GitHub Actions
+
+* `test-coverage-lint-uv.yaml`
+    * Runs on push and pull requests to the `main\|develop\|feature\|bug` branches
+    * Python matrix testing on versions 3.11 thru 3.13 with `uv` package manager on Linux, Windows, and Mac OS.
+    * Jobs: linting, unit-tests and coverage, security scanning, and application build
 
 ---
 
@@ -46,18 +101,3 @@ python manage.py runserver
 
 * Repository: [GitHub](https://github.com/naturalblaze/cookiecutter-python-django)
 * Version: 1.0.0
-
----
-
-## Environment Variables
-
-| Name | Environment | Default Value | Description |
-| ---- | ----------- | ------------- | ----------- |
-| SECRET_KEY | All | None | Django Secret Key used for cryptographic signing|
-| DEBUG | All | False | Django debug mode |
-| DJANGO_ALLOWED_HOSTS | Production | digital-entities.duckdns.org | A list of strings representing the host/domain names that this Django site can serve. |
-| DATABASE_URL | Production | postgres:///naturalblaze_django_blog" | PostgreSQL database URL |
-| CONN_MAX_AGE | Production | 60 | Database connection max age |
-| DJANGO_SECURE_SSL_REDIRECT | Production | True | SSL Redirect |
-| DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS | Production | True |  |
-| DJANGO_SECURE_CONTENT_TYPE_NOSNIFF | Production | True |  |

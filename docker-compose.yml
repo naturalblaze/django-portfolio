@@ -1,0 +1,43 @@
+services:
+  db:
+    image: "postgres:latest"
+    container_name: "django-postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    env_file: ./.env.prod
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: django-portfolio
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    volumes:
+      - ./staticfiles:/apps/staticfiles
+      - ./media:/apps/media
+    env_file: ./.env.prod
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}
+
+  proxy:
+    image: "nginx:latest"
+    container_name: "django-nginx"
+    ports:
+      - "8001:80"
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./staticfiles:/static:ro"
+      - "./media:/media:ro"
+    depends_on:
+      - "app"
+
+volumes:
+  postgres_data:

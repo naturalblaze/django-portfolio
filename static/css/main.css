@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitcount+Prop+Double:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap');
+
 
 /* Navbar formatting */
 .logo{
-    font-family: "Bitcount Prop Double", system-ui;
+    font-family: "Tulpen One", system-ui;
+    font-weight: 600;
     letter-spacing: -1.5;
 }
 .nav-link{
@@ -13,6 +17,11 @@
 
 html, body{
     font-family: "Barlow Condensed", sans-serif;
+}
+
+.display-1{
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 450;
 }
 
 /* Font size and weights formatting */
@@ -114,9 +123,10 @@ blockquote {
 
 /* Skills Button formatting */
 .btn-skills {
-  background-color: #198754;
+  background-color: #ffffff;
   border-color: #198754;
-  color: #ffffff;
+  border-width: 4px;
+  color: #000000;
 }
 .btn-skills:hover {
   background-color: #555;
