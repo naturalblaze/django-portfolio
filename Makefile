@@ -80,17 +80,17 @@ create-superuser:
 dev-run:
 	@uv run python manage.py runserver
 
-build-container:
+container-build:
 	@uv run docker compose --env-file .env.prod up -d --build
 
-start-container:
+container-start:
 	@uv run docker compose start
 
-superuser-container:
-	@uv run docker exec -it django-portfolio python manage.py createsuperuser
+container-createsuperuser:
+	@uv run docker exec -it portfolio-django python manage.py createsuperuser
 
-stop-container:
+container-stop:
 	@uv run docker compose stop
 
-remove-container:
+container-remove:
 	@uv run docker compose down -v

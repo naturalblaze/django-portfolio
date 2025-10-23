@@ -1,5 +1,6 @@
 """Wordcloud image creation for portfolio_blog app"""
 
+import os
 import base64
 import io
 import urllib.parse
@@ -40,10 +41,10 @@ def show_wordcloud(data: Optional[Union[List[str], str]]) -> Optional[Image.Imag
         plt.text(
             x=0.5,  # Horizontal position (0.5 = center)
             y=0.5,  # Vertical position (0.5 = center)
-            s="DEVOPS",  # The text to display
+            s=os.getenv("DJANGO_WORDCLOUD", "DEVOPS"),  # The text to display
             ha="center",  # Horizontal alignment ('left', 'center', 'right')
             va="center",  # Vertical alignment ('top', 'center', 'bottom')
-            fontsize=35,  # Font size
+            size="xx-large",  # Font size
             fontproperties=custom_font,  # Custom font properties
             color="black",  # Text color
             weight="bold",  # Font weight

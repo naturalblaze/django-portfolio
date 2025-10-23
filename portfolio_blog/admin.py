@@ -2,7 +2,7 @@
 
 from typing import List
 from django.contrib import admin
-from .models import Portfolio, Project, ResumeSkills, ResumeEducation, ResumeJobs, ResumeCertifications
+from portfolio_blog.models import Portfolio, Project, ResumeSkills, ResumeEducation, ResumeJobs, ResumeCertifications
 
 
 class PortfolioAdmin(admin.ModelAdmin):
