@@ -7,7 +7,7 @@
 
 ## Description
 
-This Python project uses the Django framework to create a portfolio website.
+Python project that uses the Django framework to create a portfolio website. Has a custom Wordcloud image built for your profession using the `DJANGO_WORDCLOUD` environment variable and your Resume skills. Features Resume, Projects, and About Me pages built from models in the Django database. Models support Markdown formatting and emojis to add some style. Easy to setup for local development and deploy to Docker containers.
 
 ### Django Portfolio Models
 
@@ -46,6 +46,7 @@ uv sync
 # Development environment variables
 DJANGO_ENV=local
 DJANGO_DEBUG=True
+DJANGO_WORDCLOUD=DEVOPS
 DJANGO_SECRET_KEY=super-secret-dev-key
 DJANGO_ALLOWED_HOSTS=localhost,0.0.0.0,127.0.0.1
 DATABASE_URL=sqlite:///db.sqlite3
@@ -78,9 +79,21 @@ Two environment variables files are supported for local development `.env.local`
 | DJANGO_ENV | All | local | Django Environment `local` or `prod` |
 | DJANGO_SECRET_KEY | All | None | Django Secret Key used for cryptographic signing|
 | DJANGO_DEBUG | All | False | Django debug mode |
+| DJANGO_WORDCLOUD | All | DEVOPS | Text for Wordcloud image |
 | DJANGO_ALLOWED_HOSTS | All | [] | A list of strings representing the host/domain names that this Django site can serve. |
-| DATABASE_URL | All | sqlite:///db.sqlite3 | PostgreSQL database URL |
-| CSRF_TRUSTED_ORIGINS | Prod | [http://localhost:8000] | A list of trusted origins for unsafe requests |
+| DJANGO_DATABASE_URL | All | sqlite:///db.sqlite3 | Database URL |
+| DJANGO_CSRF_TRUSTED_ORIGINS | Prod | [http://localhost:8000] | A list of trusted origins for unsafe requests |
+| POSTGRES_DB | Prod | None | Postgres database name that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| POSTGRES_USER | Prod | None | Postgres database username that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| POSTGRES_PASSWORD | Prod | None | Postgres database password that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| POSTGRES_HOST | Prod | None | Postgres database hostname that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| POSTGRES_PORT | Prod | None | Postgres database port that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+
+> [!NOTE]
+> Depending on the database used for the backend you can either provide the `DJANGO_DATABASE_URL` in the environment file or use variables in your `docker-compose.yml` to build the URL if you were to need those variables for the database container. 
+> ```
+> Postgres Example: DJANGO_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+> ```
 
 ## Populate data with projects (defaults to 20 with no `script-args`)
 
