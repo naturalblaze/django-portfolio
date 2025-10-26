@@ -1,6 +1,6 @@
 services:
   db:
-    image: "postgres:latest"
+    image: "postgres:17-alpine"
     container_name: "portfolio-postgres"
     ports:
       - "5432:5432"

@@ -3,7 +3,7 @@
 # Version: 3.0.0
 #
 PROJECT = portfolio_project
-APP = portfolio_blog
+APP = portfolio_app
 
 .PHONY: all info build build-container coverage format pylint pytest gh-pages build dev-run start-container \
 	stop-container remove-container check-vuln check-security pip-export

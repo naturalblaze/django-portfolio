@@ -3,4 +3,4 @@ DJANGO_ENV=test
 DJANGO_DEBUG=True
 DJANGO_SECRET_KEY=test_secret_key
 DJANGO_ALLOWED_HOSTS=test-host
-DATABASE_URL=sqlite:///test.sqlite3
+DJANGO_DATABASE_URL=sqlite:///test.sqlite3

@@ -2,7 +2,7 @@
 
 import factory
 from django.contrib.auth.models import User
-from portfolio_blog.models import (
+from portfolio_app.models import (
     Portfolio,
     Project,
     ResumeSkills,

@@ -5,7 +5,7 @@ import factory
 from factory import fuzzy
 from factory.faker import faker
 from django.contrib.auth.models import User
-from portfolio_blog.models import Project
+from portfolio_app.models import Project
 
 FAKE = faker.Faker()
 SKILLS = [
@@ -19,7 +19,6 @@ SKILLS = [
     "Debian",
     "Fedora",
     "CentOS",
-    "Suse",
     "VMWare",
     "KVM",
     "QEMU",
