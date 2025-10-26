@@ -1,0 +1,56 @@
+{% extends "../base/base.html" %}
+{% load static %}
+{% block title %}About Me{%endblock%}
+
+{% block template %}
+{% include "../base/navbar.html" %}
+<div class="container-fluid border-2 py-4 px-4">
+    <h1 class="display-1 px-3">About Me</h1>
+    <div class="row px-4">
+        <div class="col-xl-4 pb-3 justify-content-center align-items-center">
+            {% if portfolio.portfolio_img %}
+                <img src="{{ portfolio.portfolio_img.url }}" class="img-fluid rounded">
+            {% else %}
+                <img src="{% static 'portfolio_app/about/default-about.png' %}" class="img-fluid rounded">
+            {% endif %}
+        </div>
+        <div class="col-xl-8">
+            <div class="card text-white bg-success mb-5" >
+                <h1 class="display-1 text-center fw-bold py-2">{{ portfolio.first_name }} {{ portfolio.last_name }}</h1>
+                {% if portfolio.total_visits %}
+                    <div class="container-fluid d-flex justify-content-center align-items-center pb-2">Visitor Count: {{ portfolio.total_visits }}
+                {% endif %}
+                    </div>
+                <div class="card-footer bg-white d-flex justify-content-center align-items-center">
+                    {% if portfolio.linkedin_url %}
+                    <a class="d-block px-3" href="{{ portfolio.linkedin_url }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static 'portfolio_app/about/linkedin.png' %}" class="img-fluid float-end" style="max-height: 50px; min-height: 20px; object-fit: cover;">
+                    </a>
+                    {% endif %}
+                    {% if portfolio.github_url %}
+                    <a class="d-block px-3" href="{{ portfolio.github_url }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static 'portfolio_app/about/github-light.png' %}" class="img-fluid float-end" style="max-height: 50px; min-height: 20px; object-fit: cover;">
+                    </a>
+                    {% endif %}
+                    {% if portfolio.email %}
+                    <a class="d-block px-3" href="mailto:{{ portfolio.email }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static 'portfolio_app/about/email.png' %}" class="img-fluid float-end" style="max-height: 50px; min-height: 20px; object-fit: cover;">
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card text-center mb-4">
+                <div class="card-header text-center">Introduction</div>
+                <div class="container fs-5 py-4">{{ portfolio.introduction | markdown | safe }}</div>
+            </div>
+            <div class="card text-center mb-4">
+                <div class="card-header">Professional Experience</div>
+                <div class="container fs-5 py-4">{{ portfolio.professional_experience | markdown | safe  }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-4">
+    {% include "../base/footer.html" %}
+</div>
+{% endblock %}

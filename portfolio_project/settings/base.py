@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django_htmx",
     "taggit",
-    "portfolio_blog",
+    "portfolio_app",
 ]
 
 MIDDLEWARE = [
@@ -73,8 +73,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ],
             "builtins": [
-                "portfolio_blog.template_tags.tag_cloud",
-                "portfolio_blog.template_tags.markdown_processing",
+                "portfolio_app.template_tags.tag_cloud",
+                "portfolio_app.template_tags.markdown_processing",
             ],
         },
     },
@@ -84,7 +84,7 @@ WSGI_APPLICATION = "portfolio_project.wsgi.application"
 
 # DATABASES
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-DATABASES = {"default": env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3")}
+DATABASES = {"default": env.db_url("DJANGO_DATABASE_URL", default="sqlite:///db.sqlite3")}
 
 # CACHES
 # https://docs.djangoproject.com/en/5.2/ref/settings/#caches
@@ -119,7 +119,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 

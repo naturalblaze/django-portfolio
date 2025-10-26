@@ -7,20 +7,46 @@
 
 ## Description
 
-Python project that uses the Django framework to create a portfolio website. Has a custom Wordcloud image built for your profession using the `DJANGO_WORDCLOUD` environment variable and your Resume skills. Features Resume, Projects, and About Me pages built from models in the Django database. Models support Markdown formatting and emojis to add some style. Easy to setup for local development and deploy to Docker containers.
+Python project that uses the Django framework to create a portfolio website. 
+
+**Features:**
+
+* A custom Wordcloud image built for your profession using the `DJANGO_WORDCLOUD` environment variable and your Resume skills.
+
+* Resume, Projects, and About Me pages built from models in the Django database. Models support Markdown formatting and emojis and raw html to add some style.
+
+* Fully customizable for different users and professions.
+
+* Static files (`static` directory)
+
+    * css/main.css: CSS formatting for website templates
+
+    * fonts/: Custom font files
+
+    * portfolio_app/about/: About webpage default images
+
+    * portfolio_app/projects/: Project webpage default images
+
+    * portfolio_app/favicon.png: Favorite, shortcut, website default icon
+
+    * portfolio_app/icon.png: Navbar icon
+
+* Easy to setup for local development and deployable to Docker containers or the cloud environment of your choosing.
 
 ### Django Portfolio Models
 
 | Models | Keys | Description |
 | ------ | ---- | ----------- |
-| Portfolio | <ul><li>First Name</li><li>Last Name</li><li>Email `Optional`</li><li>Linkedin url `Optional`</li><li>Github url `Optional`</li><li>Portfolio img `Optional`</li><li>Introduction</li><li>Professional experience</li><li>Total visits `Default=0`</li></ul> | Portfolio personal information |
-| Projects | <ul><li>Title</li><li>Subtitle</li><li>Slug</li><li>Author</li><li>Content</li><li>Project img `Optional`</li><li>Status `Options:draft\|published`</li><li>Tags `Comma-separated`</li></ul> | Projects highlighting professional experience and accomplishments |
-| Resume Certifications | <ul><li>Name</li><li>Issuing Organization</li><li>Issue date</li><li>Credential id `Optional`</li><li>Credential url `Optional`</li><li>Credential img `Optional`</li></ul> | Professional certifications for Resume page |
-| Resume Education | <ul><li>Institution</li><li>Degree</li><li>Field of study</li><li>Start date</li><li>End date `Date or Current`</li></ul> | Educational experience for Resume page |
-| Resume Jobs | <ul><li>Company</li><li>Role</li><li>Description</li><li>Projects</li><li>Start date</li><li>End date `Date or Current`</li></ul> | Professional work experience for Resume page |
-| Resume Skills | <ul><li>Name</li><li>Proficiency `Options:1 to 10`</li><li>Skill img `Optional`</li><li>Tags `Comma-separated`</li></ul> | Professional skills for Resume page |
+| Portfolio | <ul><li>First Name</li><li>Last Name</li><li>Email `Optional`</li><li>Linkedin url `Optional`</li><li>Github url `Optional`</li><li>Portfolio img `Optional`</li><li>Introduction</li><li>Professional experience</li><li>Total visits `Default=0`</li></ul> | Portfolio personal information. Introduction and Professional experience accept regular text, markdown, and raw html formatting. |
+| Projects | <ul><li>Title</li><li>Subtitle</li><li>Slug</li><li>Author</li><li>Content</li><li>Project img `Optional`</li><li>Status `Options:draft\|published`</li><li>Tags `Comma-separated`</li></ul> | Projects highlighting professional experience and accomplishments. Content  accept regular text, markdown, and raw html formatting. |
+| Resume Certifications | <ul><li>Name</li><li>Issuing Organization</li><li>Issue date</li><li>Credential id `Optional`</li><li>Credential url `Optional`</li><li>Credential img `Optional`</li></ul> | Professional certifications for Resume page. |
+| Resume Education | <ul><li>Institution</li><li>Degree</li><li>Field of study</li><li>Start date</li><li>End date `Date or Current`</li></ul> | Educational experience for Resume page. |
+| Resume Jobs | <ul><li>Company</li><li>Role</li><li>Description</li><li>Projects</li><li>Start date</li><li>End date `Date or Current`</li></ul> | Professional work experience for Resume page. Description and Projects accept regular text, markdown, and raw html formatting. |
+| Resume Skills | <ul><li>Name</li><li>Proficiency `Options:1 to 10`</li><li>Skill img `Optional`</li><li>Tags `Comma-separated`</li></ul> | Professional skills for Resume page. |
 
 ## Setup Project and test server with `UV`
+
+* [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
 
 * Create Python Virtual Environment
 
@@ -49,7 +75,7 @@ DJANGO_DEBUG=True
 DJANGO_WORDCLOUD=DEVOPS
 DJANGO_SECRET_KEY=super-secret-dev-key
 DJANGO_ALLOWED_HOSTS=localhost,0.0.0.0,127.0.0.1
-DATABASE_URL=sqlite:///db.sqlite3
+DJANGO_DATABASE_URL=sqlite:///db.sqlite3
 ```
 
 * Create a superuser account

@@ -8,9 +8,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "django-portfolio"
 dynamic = ["readme"]
-version = "0.2.0"
+version = "0.3.0"
 requires-python = ">=3.11"
-description = "Django Portfolio for Blaze Bryant"
+description = "Django Portfolio Project"
 keywords = [
 ]
 authors = [
@@ -87,7 +87,7 @@ Tracker = "https://github.com/naturalblaze/django-portfolio/issues"
 [tool.setuptools.packages.find]
 include = [
     "portfolio_project*",
-    "portfolio_blog*"
+    "portfolio_app*"
 ]
 
 # Add or remove file extensions to include the data
@@ -117,7 +117,7 @@ command_line= "-m pytest -vvv"
 [tool.coverage.report]
 include = [
     "portfolio_project/*",
-    "portfolio_blog/*",
+    "portfolio_app/*",
 ]
 fail_under = 70
 
