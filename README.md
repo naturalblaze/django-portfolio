@@ -129,10 +129,21 @@ python manage.py runscript populate_projects --script-args="100"
 
 ## GitHub Actions
 
-* `test-coverage-lint-uv.yaml`
+* `test-coverage-lint-uv.yml`
     * Runs on push and pull requests to the `main\|develop\|feature\|bug` branches
-    * Python matrix testing on versions 3.11 thru 3.13 with `uv` package manager on Linux, Windows, and Mac OS.
+
+    * Python matrix testing on versions 3.11 thru 3.13 with `uv` package manager on Linux, Windows, and Mac OS
+
     * Jobs: linting, unit-tests and coverage, security scanning, and application build
+
+* `docker-publish.yml`
+    * Runs on pull request merge to the `main` branch
+
+    * Must have Docker Hub account and create PAT (personal access token with read+write access) - https://app.docker.com/accounts/DOCKER-HUB-USERID/settings/personal-access-tokens/create
+
+    * Must create GitHub repo Secrets and variables: `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN`
+
+    * Jobs: Docker build and publish to Docker Hub
 
 ---
 
