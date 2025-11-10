@@ -4,7 +4,6 @@ from django.core.cache import cache
 from django.views.generic import DetailView, ListView
 from django.db.models import Q, F
 from django_visit_count.utils import is_new_visit
-from taggit.models import Tag
 from portfolio_app.models import Portfolio, Project, ResumeJobs, ResumeSkills, ResumeEducation, ResumeCertifications
 from portfolio_app.wordcloud import show_wordcloud
 from portfolio_app.utils import get_project_dependencies

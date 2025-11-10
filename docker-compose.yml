@@ -1,12 +1,12 @@
 services:
   db:
     image: "postgres:17-alpine"
-    container_name: "portfolio-postgres"
+    container_name: "django-postgres"
     ports:
       - "5432:5432"
     volumes:
       - "postgres_data:/var/lib/postgresql/data"
-    env_file: "./.env.prod"
+    env_file: "./.env.docker"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: "10s"
@@ -15,8 +15,8 @@ services:
 
   app:
     build: .
-    container_name: "portfolio-django"
-    image: "portfolio-django:latest"
+    container_name: "django-portfolio"
+    image: "django-portfolio:latest"
     depends_on:
       db:
         condition: "service_healthy"
@@ -24,13 +24,13 @@ services:
     volumes:
       - "./staticfiles:/apps/staticfiles"
       - "./media:/apps/media"
-    env_file: "./.env.prod"
+    env_file: "./.env.docker"
     environment:
       - "DJANGO_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
 
   proxy:
     image: "nginx:latest"
-    container_name: "portfolio-nginx"
+    container_name: "django-nginx"
     ports:
       - "8001:80"
     volumes:
