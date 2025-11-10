@@ -141,6 +141,14 @@ temp_*.py
 # Ruff
 .ruff_cache
 
-# Django 
+# Django
 staticfiles/
 media/
+
+# Terraform
+.terraformrc
+terraform.rc
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+terraform.tfvars

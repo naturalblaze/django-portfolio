@@ -107,13 +107,21 @@ Two environment variables files are supported for local development `.env.local`
 | DJANGO_DEBUG | All | False | Django debug mode |
 | DJANGO_WORDCLOUD | All | DEVOPS | Text for Wordcloud image |
 | DJANGO_ALLOWED_HOSTS | All | [] | A list of strings representing the host/domain names that this Django site can serve. |
-| DJANGO_DATABASE_URL | All | sqlite:///db.sqlite3 | Database URL |
+| DJANGO_DATABASE_URL | All | sqlite:///db.sqlite3 | Database URL. Postgres database url ex. postgres://`POSTGRES_USER`:`POSTGRES_PASSWORD`@`POSTGRES_HOST`:`POSTGRES_PORT`/`POSTGRES_DB` |
 | DJANGO_CSRF_TRUSTED_ORIGINS | Prod | [http://localhost:8000] | A list of trusted origins for unsafe requests |
-| POSTGRES_DB | Prod | None | Postgres database name that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
-| POSTGRES_USER | Prod | None | Postgres database username that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
-| POSTGRES_PASSWORD | Prod | None | Postgres database password that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
-| POSTGRES_HOST | Prod | None | Postgres database hostname that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
-| POSTGRES_PORT | Prod | None | Postgres database port that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| DJANGO_SECURE_SSL_REDIRECT | Prod | True | If True, the SecurityMiddleware redirects all non-HTTPS requests to HTTPS (except for those URLs matching a regular expression listed in SECURE_REDIRECT_EXEMPT). |
+| DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS | Prod | True | If True, the SecurityMiddleware adds the includeSubDomains directive to the HTTP Strict Transport Security header. It has no effect unless SECURE_HSTS_SECONDS is set to a non-zero value. |
+| DJANGO_SECURE_HSTS_SECONDS | Prod | 31536000 | If set to a non-zero integer value, the SecurityMiddleware sets the HTTP Strict Transport Security header on all responses that do not already have it. |
+| DJANGO_SECURE_HSTS_PRELOAD | Prod | True | If True, the SecurityMiddleware adds the preload directive to the HTTP Strict Transport Security header. It has no effect unless SECURE_HSTS_SECONDS is set to a non-zero value. |
+| DJANGO_SESSION_COOKIE_SECURE | Prod | True | Whether to use a secure cookie for the session cookie. If this is set to True, the cookie will be marked as “secure”, which means browsers may ensure that the cookie is only sent under an HTTPS connection. |
+| DJANGO_SESSION_COOKIE_NAME | Prod | sessionid | The name of the cookie to use for sessions. This can be whatever you want (as long as it’s different from the other cookie names in your application). |
+| DJANGO_CSRF_COOKIE_SECURE | Prod | True | Whether to use a secure cookie for the CSRF cookie. If this is set to True, the cookie will be marked as “secure”, which means browsers may ensure that the cookie is only sent with an HTTPS connection. |
+| DJANGO_CSRF_COOKIE_NAME | Prod | csrftoken | The name of the cookie to use for the CSRF authentication token. This can be whatever you want (as long as it’s different from the other cookie names in your application). |
+| POSTGRES_DB | Docker | None | Postgres database name that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| POSTGRES_USER | Docker | None | Postgres database username that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| POSTGRES_PASSWORD | Docker | None | Postgres database password that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| POSTGRES_HOST | Docker | None | Postgres database hostname that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
+| POSTGRES_PORT | Docker | None | Postgres database port that is used to to craft `DJANGO_DATABASE_URL` in docker-compose.yaml |
 
 > [!NOTE]
 > Depending on the database used for the backend you can either provide the `DJANGO_DATABASE_URL` in the environment file or use variables in your `docker-compose.yml` to build the URL if you were to need those variables for the database container. 
@@ -125,6 +133,49 @@ Two environment variables files are supported for local development `.env.local`
 
 ```bash
 python manage.py runscript populate_projects --script-args="100"
+```
+
+## Docker Deployment Docker Desktop and Docker Hub
+
+* [Docker Desktop Install](https://docs.docker.com/desktop/)
+
+* Build containers
+
+```bash
+make container-build
+```
+
+* Start containers
+
+```bash
+make container-start
+```
+
+* Create Django Superuser
+
+```bash
+make container-createsuperuser
+```
+
+* Stop containers
+
+```bash
+make container-stop
+```
+
+* Remove containers
+
+```bash
+make container-remove
+```
+
+* Publish container
+
+> [!NOTE]
+> Change the `DOCKER_HUB` variable at the top of the `Makefile` or `make.bat`
+
+```bash
+make container-publish
 ```
 
 ## GitHub Actions

@@ -27,4 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-django:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/django-portfolio:latest
