@@ -12,11 +12,11 @@ from PIL import Image
 from wordcloud import STOPWORDS, WordCloud
 
 
-def show_wordcloud(data: Union[List[str], str] = "devops") -> Optional[Image.Image]:
+def show_wordcloud(data: Union[List[str], str] = "") -> Optional[Image.Image]:
     """Convert matplotlib data to image.
 
     Args:
-        data (Union[List[str], str]): List of words for wordcloud. defaults to "devops".
+        data (Union[List[str], str]): List of words for wordcloud.
 
     Returns:
         Optional[Image.Image]: Wordcloud image or None if error occurs.

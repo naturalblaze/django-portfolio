@@ -477,7 +477,7 @@ wheels = [
 
 [[package]]
 name = "django-portfolio"
-version = "0.5.0"
+version = "0.5.1"
 source = { editable = "." }
 dependencies = [
     { name = "django" },
@@ -490,6 +490,7 @@ dependencies = [
     { name = "markdown" },
     { name = "matplotlib" },
     { name = "pillow" },
+    { name = "pygments" },
     { name = "pymdown-extensions" },
     { name = "toml" },
     { name = "wordcloud" },
@@ -531,6 +532,7 @@ requires-dist = [
     { name = "markdown", specifier = ">=3.8.2" },
     { name = "matplotlib", specifier = ">=3.10.6" },
     { name = "pillow", specifier = ">=11.3.0" },
+    { name = "pygments", specifier = ">=2.19.2" },
     { name = "pymdown-extensions", specifier = ">=10.16.1" },
     { name = "toml", specifier = ">=0.10.2" },
     { name = "wordcloud", specifier = ">=1.9.4" },

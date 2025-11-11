@@ -26,9 +26,8 @@ class HomeView(ListView):
             context["wordcloud"] = cached_image
 
         else:
-            wordcloud_image = show_wordcloud(
-                list(ResumeSkills.objects.all().values_list("name", flat=True))  # pylint: disable=no-member
-            )
+            resume_skills = list(ResumeSkills.objects.all().values_list("name", flat=True))  # pylint: disable=no-member
+            wordcloud_image = show_wordcloud(resume_skills if resume_skills else ["devops"])
             cache.set(self.cache_key, wordcloud_image, timeout=3600)
             context["wordcloud"] = wordcloud_image
 
@@ -149,7 +148,7 @@ class AboutView(DetailView):
         """Get the single Portfolio instance."""
         portfolio = Portfolio.objects.first()
 
-        if is_new_visit(self.request, portfolio):
+        if hasattr(portfolio, "total_visits") and is_new_visit(self.request, portfolio):
             portfolio.total_visits = F("total_visits") + 1
             portfolio.save(update_fields=["total_visits"])
             portfolio.refresh_from_db()
