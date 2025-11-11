@@ -14,11 +14,9 @@
 .nav-link{
     color: white;
 }
-
 html, body{
     font-family: "Barlow Condensed", sans-serif;
 }
-
 .display-1{
     font-family: "Barlow Condensed", sans-serif;
     font-weight: 450;
@@ -136,4 +134,38 @@ blockquote {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+/* Markdown formatting */
+.project {
+    font-size: 1.2em;
+}
+.project .emojione {
+    font-size: 1.2em;
+    width: 30px;
+}
+.container .emojione {
+    width: 30px;
+}
+table {
+  table-layout: auto;
+  width: 100%;
+  border-spacing: 10px;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  width: 100px;
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Zebra striping */
+}
+code {
+    color: darkgreen;
+    background-color: #f2f2f2;
 }

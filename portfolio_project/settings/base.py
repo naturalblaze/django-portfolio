@@ -18,21 +18,22 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Take environment variables from .env file
-env_name = os.environ.get("DJANGO_ENV", "local")
-env = environ.Env(DEBUG=(bool, False))
+# env_name = os.environ.get("DJANGO_ENV", "local")
+env = environ.Env(DJANGO_DEBUG=(bool, False))
 env.read_env(str(BASE_DIR / ".env"))
+ENV_NAME = env.str("DJANGO_ENV", default="local")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str("DJANGO_SECRET_KEY")
+SECRET_KEY = env.str("DJANGO_SECRET_KEY", default="verY-bAd@secret-key!-change-me")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG", default=False)
+DEBUG = env("DJANGO_DEBUG")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 
 # Application definition
 INSTALLED_APPS = [

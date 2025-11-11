@@ -11,7 +11,7 @@ Python project that uses the Django framework to create a portfolio website.
 
 **Features:**
 
-* A custom Wordcloud image built for your profession using the `DJANGO_WORDCLOUD` environment variable and your Resume skills.
+* A custom Wordcloud image built for your profession using the `DJANGO_WORDCLOUD` environment variable and your Resume skills. `(Defaults to DEVOPS)`
 
 * Resume, Projects, and About Me pages built from models in the Django database. Models support Markdown formatting and emojis and raw html to add some style.
 
@@ -19,7 +19,7 @@ Python project that uses the Django framework to create a portfolio website.
 
 * Static files (`static` directory)
 
-    * css/main.css: CSS formatting for website templates
+    * css/: CSS formatting for website templates
 
     * fonts/: Custom font files
 
@@ -92,21 +92,17 @@ make dev-run
 
 * Test server is running: [Django Local Server](http://127.0.0.1:8000/)
 
-> [!NOTE]
-> You will need to create `Portfolio` model before the `About Me` page will load because it relies on the `Total visits` attribute to exist
-> [Django Local Admin Server](http://127.0.0.1:8000/admin/)
-
 ## Environment Variables
 
-Two environment variables files are supported for local development `.env.local` and production deployment `.env.prod`
+Environment variables are loaded from `.env` and production deployment `.env.prod`
 
 | Name | Environments | Default Value | Description |
 | ---- | ------------ | ------------- | ----------- |
 | DJANGO_ENV | All | local | Django Environment `local` or `prod` |
-| DJANGO_SECRET_KEY | All | None | Django Secret Key used for cryptographic signing|
+| DJANGO_SECRET_KEY | All | verY-bAd@secret-key!-change-me | Django Secret Key used for cryptographic signing|
 | DJANGO_DEBUG | All | False | Django debug mode |
 | DJANGO_WORDCLOUD | All | DEVOPS | Text for Wordcloud image |
-| DJANGO_ALLOWED_HOSTS | All | [] | A list of strings representing the host/domain names that this Django site can serve. |
+| DJANGO_ALLOWED_HOSTS | All | ["localhost", "127.0.0.1"] | A list of strings representing the host/domain names that this Django site can serve. |
 | DJANGO_DATABASE_URL | All | sqlite:///db.sqlite3 | Database URL. Postgres database url ex. postgres://`POSTGRES_USER`:`POSTGRES_PASSWORD`@`POSTGRES_HOST`:`POSTGRES_PORT`/`POSTGRES_DB` |
 | DJANGO_CSRF_TRUSTED_ORIGINS | Prod | [http://localhost:8000] | A list of trusted origins for unsafe requests |
 | DJANGO_SECURE_SSL_REDIRECT | Prod | True | If True, the SecurityMiddleware redirects all non-HTTPS requests to HTTPS (except for those URLs matching a regular expression listed in SECURE_REDIRECT_EXEMPT). |
@@ -190,7 +186,7 @@ make container-publish
 * `docker-publish.yml`
     * Runs on pull request merge to the `main` branch
 
-    * Must have Docker Hub account and create PAT (personal access token with read+write access) - https://app.docker.com/accounts/DOCKER-HUB-USERID/settings/personal-access-tokens/create
+    * Must have Docker Hub account and [create PAT (personal access token with read+write access)](https://app.docker.com/accounts/DOCKER-HUB-USERID/settings/personal-access-tokens/create)
 
     * Must create GitHub repo Secrets and variables: `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN`
 
