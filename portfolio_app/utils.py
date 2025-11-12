@@ -19,6 +19,7 @@ def get_project_dependencies(file_path: str = "pyproject.toml") -> Dict[str, str
         with open(file_path, "r", encoding="utf-8") as f:
             data = toml.load(f)
 
+        dependencies["version"] = data.get("project", {}).get("version", "unknown")
         for value in data.get("project", {}).get("dependencies", []):
             dependencies[value.split(">=")[0]] = value.split(">=")[1]
 
